@@ -1,34 +1,28 @@
-package windowsgroup;
+package gui;
 
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
-public class buttonsPanelRendimentos extends JPanel {
+public class buttonsPanelLongoPrazo extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public buttonsPanelRendimentos(ActionListener home) {
-		
+	public buttonsPanelLongoPrazo(ActionListener evento) {
 		
 		JButton homeButton = new JButton("Home");
+		homeButton.setName("Home");
 		homeButton.setBounds(103, 11, 84, 23);
-		homeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e){
-			}
-		});
+		homeButton.addActionListener(evento);
 		
 		JButton btnNovaCategoria = new JButton("Nova");
 		btnNovaCategoria.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnNovaCategoria.setBounds(10, 254, 128, 54);
-		btnNovaCategoria.addActionListener(home);
+		
 		
 		JButton btnEditarCategoria = new JButton("Editar");
 		btnEditarCategoria.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
@@ -36,10 +30,7 @@ public class buttonsPanelRendimentos extends JPanel {
 		
 		JButton btnExcluirCategoria = new JButton("Excluir");
 		btnExcluirCategoria.setToolTipText("");
-		btnExcluirCategoria.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
+		btnExcluirCategoria.addActionListener(evento);
 		btnExcluirCategoria.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnExcluirCategoria.setBounds(10, 384, 128, 54);
 		setLayout(null);
@@ -48,11 +39,11 @@ public class buttonsPanelRendimentos extends JPanel {
 		add(btnEditarCategoria);
 		add(btnExcluirCategoria);
 		
-		JTextPane txtpnRendimentos = new JTextPane();
-		txtpnRendimentos.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 30));
-		txtpnRendimentos.setText("Rendimentos");
-		txtpnRendimentos.setBounds(36, 54, 212, 36);
-		add(txtpnRendimentos);
+		JTextPane txtpnDespesas = new JTextPane();
+		txtpnDespesas.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 30));
+		txtpnDespesas.setText("Investimento de longo prazo");
+		txtpnDespesas.setBounds(36, 54, 231, 122);
+		add(txtpnDespesas);
 		
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
@@ -76,11 +67,12 @@ public class buttonsPanelRendimentos extends JPanel {
 		txtpnCategorias.setBounds(10, 209, 128, 34);
 		add(txtpnCategorias);
 		
-		JTextPane txtpnRendimentos_1 = new JTextPane();
-		txtpnRendimentos_1.setText("Rendimentos");
-		txtpnRendimentos_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtpnRendimentos_1.setBounds(148, 209, 128, 34);
-		add(txtpnRendimentos_1);
+		JTextPane txtpnDespesas_1 = new JTextPane();
+		txtpnDespesas_1.setText("Despesas");
+		txtpnDespesas_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
+		txtpnDespesas_1.setBounds(148, 209, 128, 34);
+		add(txtpnDespesas_1);
 		
 	}
+
 }
