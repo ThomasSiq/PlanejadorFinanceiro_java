@@ -1,4 +1,4 @@
-package gui;
+package gui.btnpanel;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -7,13 +7,13 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
-public class buttonsPanelLongoPrazo extends JPanel {
+public class ButtonsPanelDespesas extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public buttonsPanelLongoPrazo(ActionListener evento) {
-		
+	public ButtonsPanelDespesas(ActionListener evento) {
+
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
 		homeButton.setBounds(103, 11, 84, 23);
@@ -41,8 +41,8 @@ public class buttonsPanelLongoPrazo extends JPanel {
 		
 		JTextPane txtpnDespesas = new JTextPane();
 		txtpnDespesas.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 30));
-		txtpnDespesas.setText("Investimento de longo prazo");
-		txtpnDespesas.setBounds(36, 54, 231, 122);
+		txtpnDespesas.setText("Despesas");
+		txtpnDespesas.setBounds(36, 54, 212, 36);
 		add(txtpnDespesas);
 		
 		JButton btnNovo = new JButton("Novo");
@@ -74,5 +74,4 @@ public class buttonsPanelLongoPrazo extends JPanel {
 		add(txtpnDespesas_1);
 		
 	}
-
 }

@@ -1,4 +1,4 @@
-package gui;
+package gui.btnpanel;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -9,12 +9,12 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.Font;
 
-public class buttonsPanelHome extends JPanel {
+public class ButtonsPanelHome extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public buttonsPanelHome(ActionListener evento) {
+	public ButtonsPanelHome(ActionListener evento) {
 		
 		JButton homeButton = new JButton("Home");
 		homeButton.setBounds(96, 11, 87, 23);
@@ -40,19 +40,27 @@ public class buttonsPanelHome extends JPanel {
 		btnLongoPrazo.setToolTipText("");
 		btnLongoPrazo.addActionListener(evento);
 		btnLongoPrazo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 16));
-		btnLongoPrazo.setBounds(10, 175, 257, 81);
+		btnLongoPrazo.setBounds(10, 266, 257, 81);
 		
 		JButton btnResumo = new JButton("Resumo");
 		btnResumo.setName("Resumo");
 		btnResumo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnResumo.setBounds(10, 267, 257, 54);
+		btnResumo.setBounds(10, 358, 257, 54);
 		btnResumo.addActionListener(evento);
 		
 		JButton btnRelatorio = new JButton("Relatório");
 		btnRelatorio.setName("Relatorio");
 		btnRelatorio.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnRelatorio.setBounds(10, 332, 257, 54);
+		btnRelatorio.setBounds(10, 423, 257, 54);
 		btnRelatorio.addActionListener(evento);
+		
+		JButton btnOcasionais = new JButton("Fundo para despesas ocasionais");
+		btnOcasionais.setToolTipText("");
+		btnOcasionais.setName("Ocasionais");
+		btnOcasionais.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 16));
+		btnOcasionais.setBounds(10, 174, 257, 81);
+		btnOcasionais.addActionListener(evento);
+		
 		setLayout(null);
 		add(homeButton);
 		add(btnRendimento);
@@ -60,6 +68,8 @@ public class buttonsPanelHome extends JPanel {
 		add(btnLongoPrazo);
 		add(btnResumo);
 		add(btnRelatorio);
+		add(btnOcasionais);
+		
 		
 	}
 }
