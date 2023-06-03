@@ -1,4 +1,5 @@
 package gui;
+
 import gui.contentpanel.*;
 
 import java.awt.Dimension;
@@ -45,7 +46,7 @@ public class MainWindow extends JFrame {
 	private JPanel ctpanelResumoAnual;
 	private JPanel ctpanelResumoMensal;
 	private JPanel ctpanelOcasionais;
-	
+
 	ArrayList<JPanel> janelas;
 	ArrayList<JPanel> janelasConteudo;
 
@@ -66,11 +67,6 @@ public class MainWindow extends JFrame {
 		});
 	}
 
-	public Rectangle getBtnWindowSizes() {
-		return this.buttonsWindow.getBounds();
-	}
-
-
 	public void showPanel(String nome) {
 
 		btpanelRendimentos.setVisible(false);
@@ -80,7 +76,7 @@ public class MainWindow extends JFrame {
 		btpanelResumo.setVisible(false);
 		btpanelRelatorio.setVisible(false);
 		btpanelOcasionais.setVisible(false);
-		
+
 		ctpanelRendimentos.setVisible(false);
 		ctpanelDespesas.setVisible(false);
 		ctpanelLongoPrazo.setVisible(false);
@@ -110,18 +106,16 @@ public class MainWindow extends JFrame {
 		}
 
 	}
-	
+
 	private void setDinamicBounds() {
 
-		contentWindow.setBounds(320, 10, (this.getBounds().width)-350, this.getBounds().height-60);
-		
-		
-		for(JPanel panel : janelasConteudo) {
-			panel.setBounds(0,0,contentWindow.getBounds().width, contentWindow.getBounds().height);
+		contentWindow.setBounds(320, 10, (this.getBounds().width) - 350, this.getBounds().height - 60);
+
+		for (JPanel panel : janelasConteudo) {
+			panel.setBounds(0, 0, contentWindow.getBounds().width, contentWindow.getBounds().height);
 			
 		}
 
-	
 	}
 
 	/**
@@ -130,50 +124,48 @@ public class MainWindow extends JFrame {
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 1000, 600);
-		this.setMinimumSize(new Dimension(900,600));
-		
+		this.setMinimumSize(new Dimension(900, 600));
+
 		janelas = new ArrayList();
 		janelasConteudo = new ArrayList();
-		
+
 		evento = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JButton comp =(JButton)e.getSource();
+				JButton comp = (JButton) e.getSource();
 				String name = comp.getName();
-						
+
 				showPanel(name);
 			}
 		};
-		
+
 		this.addComponentListener(new ComponentAdapter() {
-		      @Override
-		      public void componentResized(ComponentEvent e) {
-		        setDinamicBounds();
-		      }
-		    });
-		
+			@Override
+			public void componentResized(ComponentEvent e) {
+				setDinamicBounds();
+			}
+		});
+
 		contentPane = new JPanel();
 		buttonsWindow = new JPanel();
 		buttonsWindow.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		contentWindow = new JPanel();
 		contentWindow.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
-		
+
 		btpanelHome = new ButtonsPanelHome(evento);
 		btpanelRendimentos = new ButtonsPanelRendimentos(evento);
-		btpanelDespesas = new ButtonsPanelDespesas(evento);	
-		btpanelLongoPrazo = new ButtonsPanelLongoPrazo(evento);	
-		btpanelResumo = new ButtonsPanelResumo(evento);	
-		btpanelRelatorio = new ButtonsPanelRelatorio(evento);	
+		btpanelDespesas = new ButtonsPanelDespesas(evento);
+		btpanelLongoPrazo = new ButtonsPanelLongoPrazo(evento);
+		btpanelResumo = new ButtonsPanelResumo(evento);
+		btpanelRelatorio = new ButtonsPanelRelatorio(evento);
 		btpanelOcasionais = new ButtonsPanelOcasional(evento);
-		
+
 		ctpanelRendimentos = new ContentPanelRendimentos();
-		ctpanelDespesas = new ContentPanelDespesas();	
-		ctpanelLongoPrazo = new ContentPanelLongoPrazo();	
-		ctpanelResumoAnual = new ContentPanelResumoAnual();	
+		ctpanelDespesas = new ContentPanelDespesas();
+		ctpanelLongoPrazo = new ContentPanelLongoPrazo();
+		ctpanelResumoAnual = new ContentPanelResumoAnual();
 		ctpanelResumoMensal = new ContentPanelResumoMensal();
 		ctpanelOcasionais = new ContentPanelOcasional();
-		
-		
-		
+
 		janelas.add(btpanelHome);
 		janelas.add(btpanelRendimentos);
 		janelas.add(btpanelDespesas);
@@ -189,39 +181,34 @@ public class MainWindow extends JFrame {
 		janelasConteudo.add(ctpanelResumoAnual);
 		janelasConteudo.add(ctpanelResumoMensal);
 		janelasConteudo.add(ctpanelOcasionais);
-		
-		
+
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
 		contentPane.add(contentWindow);
 		contentWindow.setLayout(null);
-		
 
-		contentPane.add(buttonsWindow);		buttonsWindow.setLayout(null);
-		
+		contentPane.add(buttonsWindow);
+		buttonsWindow.setLayout(null);
+
 		setDinamicBounds();
-		
 
 		buttonsWindow.setBounds(10, 10, 300, 540);
-		
-		for(JPanel panel : janelas) {
+
+		for (JPanel panel : janelas) {
 			panel.setBounds(10, 10, 280, 520);
 			buttonsWindow.add(panel);
 			panel.setVisible(false);
 		}
 		btpanelHome.setVisible(true);
-		
-		
-		for(JPanel panel : janelasConteudo) {
+
+		for (JPanel panel : janelasConteudo) {
 			contentWindow.add(panel);
 			panel.setVisible(false);
 		}
 		ctpanelResumoAnual.setVisible(true);
-		
-		
+
 	}
 }

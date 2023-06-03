@@ -23,9 +23,17 @@ public class ContentPanelResumoAnual extends JPanel {
 		setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		
 		table = new JTable();
+				
+		this.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				JPanel component  = (JPanel) e.getComponent().getParent();
+				tablePanel.setBounds(new Rectangle(0,0, component.getBounds().width, component.getBounds().height));
+				table.setBounds(tablePanel.getBounds());
+			}
+		});
+		
 		table.setFillsViewportHeight(true);
-		
-		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 				{null, null, null, null},
@@ -50,15 +58,10 @@ public class ContentPanelResumoAnual extends JPanel {
 		tablePanel = new JScrollPane(table);
 		add(tablePanel);
 		
+		
 
 	}
 	
-	public void ajustBords(Rectangle rec) {
-		setBounds(new Rectangle(0,0,rec.getBounds().width, rec.getBounds().height));
-		tablePanel.setBounds(new Rectangle(0,0,rec.getBounds().width, rec.getBounds().height));
-		
-		System.out.println(getBounds());
-		System.out.println(tablePanel.getBounds());
-	}
+
 
 }
