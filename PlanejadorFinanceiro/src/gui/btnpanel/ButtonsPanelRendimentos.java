@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
+import gui.dialogWindows.AdicionarDespesasDialog;
+
 public class ButtonsPanelRendimentos extends JPanel {
 
 	/**
@@ -52,6 +54,12 @@ public class ButtonsPanelRendimentos extends JPanel {
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnNovo.setBounds(148, 254, 128, 54);
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdicionarDespesasDialog diag = new AdicionarDespesasDialog();
+				diag.setVisible(true);
+			}
+		});
 		add(btnNovo);
 		
 		JButton btnEditarCategoria_1 = new JButton("Editar");

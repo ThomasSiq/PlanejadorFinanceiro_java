@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import java.awt.Rectangle;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -11,6 +13,8 @@ import javax.swing.JTable;
 import gui.MainWindow;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+
+import dao.GetDataDao;
 
 public class ContentPanelRendimentos extends JPanel {
 	private JTable table;
@@ -21,13 +25,12 @@ public class ContentPanelRendimentos extends JPanel {
 	public ContentPanelRendimentos() {
 		
 		table = new JTable();
+		table.setFillsViewportHeight(true);
+		Object[][] valores = tabela("rendimentos");
 
 		
 		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
+			valores,
 			new String[] {
 				"Categoria", "Rendimento", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]"
 			}
@@ -53,6 +56,18 @@ public class ContentPanelRendimentos extends JPanel {
 	
 	public void redme(Rectangle rec) {
 		setBounds(rec);
+	}
+	
+	private Object[][] tabela(String nome){
+		ArrayList<ArrayList<Object>> resultado = new ArrayList();
+		resultado = GetDataDao.getTable(nome);
+		
+		Object tabelaRetorno[][]  = new Object[resultado.size()][];
+		for (int i = 0; i < resultado.size(); i++) {
+		    ArrayList<Object> row = resultado.get(i);
+		    tabelaRetorno[i] = row.toArray(new Object[row.size()]);
+		}
+		return tabelaRetorno;
 	}
 
 }
