@@ -3,6 +3,8 @@ package service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import dao.GetDataDao;
 import dao.InsertTable;
 import enumdata.Meses;
 
@@ -74,6 +76,26 @@ public class MainService {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public static ArrayList<Object> getTabela(String nome) {
+		
+		ArrayList<Object> retorno = new ArrayList();
+		ArrayList<ArrayList<Object>> resultado = new ArrayList();
+		resultado = GetDataDao.getTable(nome);
+
+		Object tabelaRetorno[][] = new Object[resultado.size()][];
+		for (int i = 0; i < resultado.size(); i++) {
+			ArrayList<Object> row = resultado.get(i);
+			tabelaRetorno[i] = row.toArray(new Object[row.size()]);
+		}
+		
+		
+		retorno.add(tabelaRetorno);
+		retorno.add(GetDataDao.getTableYears(nome));
+		
+		
+		return retorno;
 	}
 
 }
