@@ -1,4 +1,4 @@
-package gui.dialogWindows;
+package gui.despesa;
 
 import java.awt.EventQueue;
 
@@ -18,7 +18,8 @@ import javax.swing.JDialog;
 import javax.swing.JSpinner;
 import javax.swing.border.EtchedBorder;
 
-import enumdata.Meses;
+import dao.PegaDadosDao;
+import enumdata.MesesEnum;
 
 import service.MainService;
 
@@ -77,6 +78,11 @@ public class AdicionarDespesasDialog extends JDialog {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(262, 276, 105, 37);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
 		contentPane.add(btnCancelar);
 		
 		textFieldDespesa = new JTextField();
@@ -91,7 +97,7 @@ public class AdicionarDespesasDialog extends JDialog {
 		JLabel lblCategoria = new JLabel("Categoria");
 		lblCategoria.setBounds(10, 65, 67, 17);
 		contentPane.add(lblCategoria);
-		String lista[] = {"Normal","Diferenciado"};  
+		Object[] lista = PegaDadosDao.getCategoria("Despesas").toArray();  
 		comboBoxCategoria = new JComboBox(lista);
 		comboBoxCategoria.setBounds(87, 65, 337, 20);
 		contentPane.add(comboBoxCategoria);
@@ -114,7 +120,7 @@ public class AdicionarDespesasDialog extends JDialog {
 		lblNewLabel_1_1.setBounds(51, 36, 46, 14);
 		panel.add(lblNewLabel_1_1);
 		
-		comboBoxMesMensal = new JComboBox(Meses.values());
+		comboBoxMesMensal = new JComboBox(MesesEnum.values());
 		comboBoxMesMensal.setBounds(90, 32, 97, 22);
 		panel.add(comboBoxMesMensal);
 		
@@ -159,7 +165,7 @@ public class AdicionarDespesasDialog extends JDialog {
 		panel_1.add(lblNewLabel_1_1_2);
 		
 		comboBoxMesOcasional = new JComboBox();
-		comboBoxMesOcasional.setModel(new DefaultComboBoxModel<>(Meses.values()));
+		comboBoxMesOcasional.setModel(new DefaultComboBoxModel<>(MesesEnum.values()));
 		comboBoxMesOcasional.setBounds(90, 32, 97, 22);
 		panel_1.add(comboBoxMesOcasional);
 		
@@ -211,14 +217,14 @@ public class AdicionarDespesasDialog extends JDialog {
 		valores.add("\""+comboBoxCategoria.getSelectedItem().toString()+"\"");
 		if(rdbtnOcasional.isSelected()) {
 			campos.add("ocasional");
-			mesInicio = ((Meses)comboBoxMesOcasional.getSelectedItem()).getNumero();
+			mesInicio = ((MesesEnum)comboBoxMesOcasional.getSelectedItem()).getNumero();
 			anoInicio =  Integer.parseInt((textFieldAnoOcasional.getText()));
 			duracao = 1; 
 			valores.add(textFieldValorOcasional.getText());
 		}
 		else {
 			campos.add("mensal");
-			mesInicio = (((Meses)comboBoxMesMensal.getSelectedItem()).getNumero());
+			mesInicio = (((MesesEnum)comboBoxMesMensal.getSelectedItem()).getNumero());
 			anoInicio =  Integer.parseInt((textFieldAnoMensal.getText()));
 			duracao = ((Integer)spinnerDuracao.getValue()); 
 			valores.add(textFieldValorMensal.getText());

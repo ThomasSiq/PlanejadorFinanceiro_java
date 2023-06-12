@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetDataDao {
+public class GetTabelasDao {
 
 	public static ArrayList<ArrayList<Object>> getTable(String tabela) {
 
@@ -47,6 +47,7 @@ public class GetDataDao {
 						tupla.add(rs.getString("despesa"));
 						tupla.add(rs.getDouble("mensal"));
 						tupla.add(rs.getDouble("ocasional"));
+						tupla.add(rs.getDouble("total"));
 
 						lista.add(tupla);
 					}
@@ -77,7 +78,7 @@ public class GetDataDao {
 			ResultSet rs = null;
 
 			try {
-				st = conn.prepareStatement("select distinct ano from " + tabela+" order by ano ASC");
+				st = conn.prepareStatement("select distinct ano from " + tabela+" order by ano DESC");
 				rs = st.executeQuery();
 
 				while (rs.next()) {

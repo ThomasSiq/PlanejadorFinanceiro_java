@@ -14,7 +14,7 @@ import gui.MainWindow;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 
-import dao.GetDataDao;
+import dao.GetTabelasDao;
 
 public class ContentPanelRendimentos extends JPanel {
 	private JTable table;
@@ -60,7 +60,7 @@ public class ContentPanelRendimentos extends JPanel {
 	
 	private Object[][] tabela(String nome){
 		ArrayList<ArrayList<Object>> resultado = new ArrayList();
-		resultado = GetDataDao.getTable(nome);
+		resultado = GetTabelasDao.getTable(nome);
 		
 		Object tabelaRetorno[][]  = new Object[resultado.size()][];
 		for (int i = 0; i < resultado.size(); i++) {

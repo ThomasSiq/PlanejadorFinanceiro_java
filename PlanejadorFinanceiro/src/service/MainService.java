@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dao.GetDataDao;
+import dao.GetTabelasDao;
 import dao.InsertTable;
-import enumdata.Meses;
+import enumdata.MesesEnum;
 
 public class MainService {
 
@@ -45,26 +45,23 @@ public class MainService {
 						valoresTupla += "," + (Integer.toString(anoInicio));
 						valoresTupla += "," + (Integer.toString(mesInicio));
 						valoresTupla += "," + (Integer.toString(duracao));
-						
-					}
-					duracao-=12;
 
+					}
+					duracao -= 12;
+					
 				} else if ((duracao + (mesInicio - 1)) > 12) {
 					valoresTupla += "," + (Integer.toString(anoInicio));
 					valoresTupla += "," + (Integer.toString(mesInicio));
 					valoresTupla += "," + (Integer.toString((12 - mesInicio) + 1));
-					duracao-=((12 - mesInicio) + 1);
 					mesInicio = 0;
-					
-					
-				} else {	
+
+				} else {
 					valoresTupla += "," + (Integer.toString(anoInicio));
 					valoresTupla += "," + (Integer.toString(mesInicio));
-					valoresTupla += "," + (Integer.toString((12 - mesInicio) + 1));
-					duracao-=12;
-					
+					valoresTupla += "," + (Integer.toString(duracao));
+					duracao = 0;
 				}
-				anoInicio +=1;
+				anoInicio += 1;
 				tupla.add(camposTupla);
 				tupla.add(valoresTupla);
 				InsertTable.cadastrar(tupla);
@@ -77,24 +74,22 @@ public class MainService {
 		}
 
 	}
-	
+
 	public static ArrayList<Object> getTabela(String nome) {
-		
+
 		ArrayList<Object> retorno = new ArrayList();
 		ArrayList<ArrayList<Object>> resultado = new ArrayList();
-		resultado = GetDataDao.getTable(nome);
+		resultado = GetTabelasDao.getTable(nome);
 
 		Object tabelaRetorno[][] = new Object[resultado.size()][];
 		for (int i = 0; i < resultado.size(); i++) {
 			ArrayList<Object> row = resultado.get(i);
 			tabelaRetorno[i] = row.toArray(new Object[row.size()]);
 		}
-		
-		
+
 		retorno.add(tabelaRetorno);
-		retorno.add(GetDataDao.getTableYears(nome));
-		
-		
+		retorno.add(GetTabelasDao.getTableYears(nome));
+
 		return retorno;
 	}
 

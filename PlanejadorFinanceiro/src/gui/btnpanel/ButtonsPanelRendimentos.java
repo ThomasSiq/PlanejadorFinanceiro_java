@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
-import gui.dialogWindows.AdicionarDespesasDialog;
+import gui.despesa.AdicionarDespesasDialog;
 
 public class ButtonsPanelRendimentos extends JPanel {
 

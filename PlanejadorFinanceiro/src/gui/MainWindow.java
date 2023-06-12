@@ -1,6 +1,8 @@
 package gui;
 
 import gui.contentpanel.*;
+import gui.despesa.ButtonsPanelDespesas;
+import gui.despesa.ContentPanelDespesas;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -123,7 +125,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(0, 0, 1000, 600);
+		setBounds(0, 0, 1400, 650);
 		this.setMinimumSize(new Dimension(900, 600));
 
 		janelas = new ArrayList();
