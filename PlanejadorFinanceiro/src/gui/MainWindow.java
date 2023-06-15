@@ -1,8 +1,6 @@
 package gui;
 
 import gui.contentpanel.*;
-import gui.despesa.ButtonsPanelDespesas;
-import gui.despesa.ContentPanelDespesas;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -11,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
 
 	/** iniciando ActionListener */
 	private ActionListener evento;
+	private WindowListener att;
 
 	/** iniciando todas as janelas vazias */
 	private JPanel buttonsWindow;
@@ -139,6 +140,32 @@ public class MainWindow extends JFrame {
 				showPanel(name);
 			}
 		};
+		att = new WindowListener() {
+
+            public void windowActivated(WindowEvent arg0) {
+                // Do nothing
+            }
+            public void windowClosed(WindowEvent e) {
+            	((ContentPanelRendimentos)ctpanelRendimentos).attTabelas();
+            	((ContentPanelDespesas)ctpanelDespesas).attTabelas();
+            }
+            public void windowClosing(WindowEvent arg0) {
+                // Do nothing
+            }
+            public void windowDeactivated(WindowEvent arg0) {
+                // Do nothing
+            }
+            public void windowDeiconified(WindowEvent arg0) {
+                // Do nothing
+            }
+            public void windowIconified(WindowEvent arg0) {
+                // Do nothing
+            }
+            public void windowOpened(WindowEvent arg0) {
+                // Do nothing
+            }
+
+        };
 
 		this.addComponentListener(new ComponentAdapter() {
 			@Override
@@ -154,8 +181,8 @@ public class MainWindow extends JFrame {
 		contentWindow.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
 		btpanelHome = new ButtonsPanelHome(evento);
-		btpanelRendimentos = new ButtonsPanelRendimentos(evento);
-		btpanelDespesas = new ButtonsPanelDespesas(evento);
+		btpanelRendimentos = new ButtonsPanelRendimentos(evento, att);
+		btpanelDespesas = new ButtonsPanelDespesas(evento, att);
 		btpanelLongoPrazo = new ButtonsPanelLongoPrazo(evento);
 		btpanelResumo = new ButtonsPanelResumo(evento);
 		btpanelRelatorio = new ButtonsPanelRelatorio(evento);

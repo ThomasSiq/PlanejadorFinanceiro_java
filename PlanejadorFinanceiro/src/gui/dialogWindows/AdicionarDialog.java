@@ -1,4 +1,4 @@
-package gui.despesa;
+package gui.dialogWindows;
 
 import java.awt.EventQueue;
 
@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
@@ -27,7 +28,7 @@ import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import java.awt.Font;
 
-public class AdicionarDespesasDialog extends JDialog {
+public class AdicionarDialog extends JDialog {
 
 	private JPanel contentPane;
 	private JTextField textFieldDespesa;
@@ -39,27 +40,16 @@ public class AdicionarDespesasDialog extends JDialog {
 	private JComboBox comboBoxMesMensal;
 	private JTextField textFieldAnoOcasional;
 	private JLabel lblNewLabel_2_1;
+	private JLabel lblNewLabel_3; 
 	private JSpinner spinnerDuracao;
 	private JRadioButton rdbtnOcasional;
 	private JRadioButton rdbtnMensal;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AdicionarDespesasDialog dialog = new AdicionarDespesasDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	private String nome;
 	/**
 	 * Create the frame.
 	 */
-	public AdicionarDespesasDialog() {
+	public AdicionarDialog(String tab, WindowListener att) {
+		nome = tab;
 		setBounds(100, 100, 450, 357);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -90,14 +80,14 @@ public class AdicionarDespesasDialog extends JDialog {
 		contentPane.add(textFieldDespesa);
 		textFieldDespesa.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("Despesa");
+		JLabel lblNewLabel = new JLabel(nome);
 		lblNewLabel.setBounds(10, 37, 67, 17);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
 		lblCategoria.setBounds(10, 65, 67, 17);
 		contentPane.add(lblCategoria);
-		Object[] lista = PegaDadosDao.getCategoria("Despesas").toArray();  
+		Object[] lista = PegaDadosDao.getCategoria(nome).toArray();  
 		comboBoxCategoria = new JComboBox(lista);
 		comboBoxCategoria.setBounds(87, 65, 337, 20);
 		contentPane.add(comboBoxCategoria);
@@ -145,7 +135,7 @@ public class AdicionarDespesasDialog extends JDialog {
 		separator.setBounds(9, 101, 180, 10);
 		panel.add(separator);
 		
-		rdbtnMensal = new JRadioButton("Despesa mensal");
+		rdbtnMensal = new JRadioButton("Mensal");
 		rdbtnMensal.setBounds(6, 7, 109, 23);
 		panel.add(rdbtnMensal);
 		
@@ -186,7 +176,7 @@ public class AdicionarDespesasDialog extends JDialog {
 		separator_1.setBounds(9, 101, 180, 10);
 		panel_1.add(separator_1);
 		
-		rdbtnOcasional = new JRadioButton("Despesa Ocasional");
+		rdbtnOcasional = new JRadioButton("Ocasional");
 		rdbtnOcasional.setBounds(6, 7, 133, 23);
 		panel_1.add(rdbtnOcasional);
 		
@@ -195,22 +185,33 @@ public class AdicionarDespesasDialog extends JDialog {
 		textFieldValorOcasional.setBounds(90, 119, 97, 20);
 		panel_1.add(textFieldValorOcasional);
 		
-		JLabel lblNewLabel_3 = new JLabel("Adicionar nova despesa");
+		if(nome.equals("Despesas")) {
+			lblNewLabel_3 = new JLabel("Adicionar nova despesa");
+		}
+		else if(nome.equals("Rendimentos")) {
+			lblNewLabel_3 = new JLabel("Adicionar novo rendimento");
+		}
+		else {
+			lblNewLabel_3 = new JLabel("Adicionar novo:");
+		}
+
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 23));
 		lblNewLabel_3.setBounds(99, 0, 244, 28);
 		contentPane.add(lblNewLabel_3);
+		
+		this.addWindowListener(att);
 	}
 	
 	
 	void addDataDatabase(){
-		String tabela  = "despesas";
+		String tabela  = nome;
 		ArrayList<String>campos = new ArrayList();
 		ArrayList<String>valores = new ArrayList();
 		int mesInicio;
 		int duracao = 1;
 		int anoInicio;
 		
-		campos.add("despesa");
+		campos.add("nome");
 		campos.add("categoria");
 		
 		valores.add("\""+textFieldDespesa.getText()+"\"");
@@ -232,6 +233,5 @@ public class AdicionarDespesasDialog extends JDialog {
 		
 		MainService.CriaTuplaDespesa(tabela, campos, valores, mesInicio, anoInicio, duracao);
 		dispose();
-		
 	}
 }

@@ -1,10 +1,17 @@
-package gui.despesa;
+package gui.btnpanel;
 
-import java.awt.Font;
-import gui.despesa.RemoveCategoriaDespesaDialog;
-import gui.despesa.EditarCategoriaDialog;
+import java.awt.Font; 
+
+import gui.dialogWindows.AdicionarCategoriaDialog;
+import gui.dialogWindows.AdicionarDialog;
+import gui.dialogWindows.EditarCategoriaDialog;
+import gui.dialogWindows.EditarDialog;
+import gui.dialogWindows.ExcluirDialog;
+import gui.dialogWindows.RemoveCategoriaDialog;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,12 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import dao.RemoveDadosDao;
+
 public class ButtonsPanelDespesas extends JPanel {
 
 	/**
 	 * Create the panel.
 	 */
-	public ButtonsPanelDespesas(ActionListener evento) {
+	public ButtonsPanelDespesas(ActionListener evento, final WindowListener att) {
 
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
@@ -31,7 +39,7 @@ public class ButtonsPanelDespesas extends JPanel {
 		btnNovaCategoria.setBounds(10, 254, 128, 54);
 		btnNovaCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdicionarCategoriaDialog diag = new AdicionarCategoriaDialog();
+				AdicionarCategoriaDialog diag = new AdicionarCategoriaDialog("Despesas");
 				diag.setVisible(true);
 			}
 		});
@@ -41,7 +49,7 @@ public class ButtonsPanelDespesas extends JPanel {
 		btnEditarCategoria.setBounds(10, 319, 128, 54);
 		btnEditarCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EditarCategoriaDialog diag = new EditarCategoriaDialog();
+				EditarCategoriaDialog diag = new EditarCategoriaDialog("Despesas");
 				diag.setVisible(true);
 			}
 		});
@@ -52,7 +60,7 @@ public class ButtonsPanelDespesas extends JPanel {
 		btnExcluirCategoria.setBounds(10, 384, 128, 54);
 		btnExcluirCategoria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveCategoriaDespesaDialog diag = new RemoveCategoriaDespesaDialog();
+				RemoveCategoriaDialog diag = new RemoveCategoriaDialog("Despesas");
 				diag.setVisible(true);
 			}
 		});
@@ -76,7 +84,7 @@ public class ButtonsPanelDespesas extends JPanel {
 		btnNovo.setBounds(148, 254, 128, 54);
 		btnNovo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdicionarDespesasDialog diag = new AdicionarDespesasDialog();
+				AdicionarDialog diag = new AdicionarDialog("Despesas", att);
 				diag.setVisible(true);
 			}
 		});
@@ -85,12 +93,24 @@ public class ButtonsPanelDespesas extends JPanel {
 		JButton btnEditarCategoria_1 = new JButton("Editar");
 		btnEditarCategoria_1.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnEditarCategoria_1.setBounds(148, 319, 128, 54);
+		btnEditarCategoria_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditarDialog diag = new EditarDialog("Despesas", att);
+				diag.setVisible(true);
+			}
+		});
 		add(btnEditarCategoria_1);
 
 		JButton btnExcluirCategoria_1 = new JButton("Excluir");
 		btnExcluirCategoria_1.setToolTipText("");
 		btnExcluirCategoria_1.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnExcluirCategoria_1.setBounds(148, 384, 128, 54);
+		btnExcluirCategoria_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ExcluirDialog diag = new ExcluirDialog("Despesas", att);
+				diag.setVisible(true);
+			}
+		});
 		add(btnExcluirCategoria_1);
 
 		JTextPane txtpnCategorias = new JTextPane();

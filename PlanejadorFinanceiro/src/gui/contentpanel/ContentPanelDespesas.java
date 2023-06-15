@@ -1,4 +1,4 @@
-package gui.despesa;
+package gui.contentpanel;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -71,7 +71,7 @@ public class ContentPanelDespesas extends JPanel {
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 		
-		updateTabela("despesas"); //Pega dados das tabelas
+		updateTabela("Despesas"); //Pega dados das tabelas
 		anosPeriodo = (ArrayList<Integer>) anos.clone();
 
 
@@ -236,19 +236,8 @@ public class ContentPanelDespesas extends JPanel {
 	private void updateTabela(String nome) {
 		ArrayList<Object> retorno = MainService.getTabela(nome);
 		tabela = (Object[][]) retorno.get(0);
+
 		anos = (ArrayList<Integer>) retorno.get(1);
-	}
-
-	private Object[][] valoresTuplas() {
-		if (tabela.length == 0)
-			return tabela;
-
-		Object[][] retorno = new Object[tabela.length][5];
-		for (int i = 0; i < tabela.length; i++) {
-			retorno[i] = Arrays.copyOfRange(tabela[i], 4, tabela[0].length);
-			retorno[i][4] = (int) tabela[i][3] * (double) tabela[i][6] + (double) tabela[i][7];
-		}
-		return retorno;
 	}
 
 	private void mudaAnos() {
@@ -270,7 +259,9 @@ public class ContentPanelDespesas extends JPanel {
 			}
 		}
 		internPanel.removeAll();
-		DesenhaTabelasDinamicas.desenhaTabelasAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel, tablesList);
+		if(tabela.length>0) {
+			DesenhaTabelasDinamicas.desenhaTabelasAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel, tablesList);
+		}
 		internPanel.revalidate();
 		internPanel.repaint();
 
@@ -312,5 +303,15 @@ public class ContentPanelDespesas extends JPanel {
 		internPanel.revalidate();
 		internPanel.repaint();
 
+	}
+	public void attTabelas() {
+		updateTabela("Despesas");
+
+		if(rdbtnAno.isSelected()) {
+			mudaAnos();
+		}
+		if(rdbtnNewRadioButton.isSelected()) {
+			mudaMeses();
+		}
 	}
 }

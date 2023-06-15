@@ -25,4 +25,25 @@ public class EditarDadosDao {
 		}
 		
 	}
+	
+	public static void editarTupla(String tabela, String codigo, String categoria, String ano, String despesa, String mensal, String ocasional) {
+		Statement st = null;
+		try {
+			try {
+				Connection conn = BancoDados.conectar();
+				String statement = "update " + tabela + " set categoria = \"" +categoria+ "\", ano = \""+ano+"\" , despesa = \""+despesa+"\", mensal = \""+mensal+"\", ocasional = \""+ocasional+"\"    where codigo = "+codigo;
+				System.out.println(statement);
+				st = conn.createStatement();
+				st.executeUpdate(statement);
+				
+			} finally {
+
+				BancoDados.finalizarStatement(st);
+				BancoDados.desconectar();
+			}
+		} catch (SQLException | IOException e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
 }

@@ -1,4 +1,4 @@
-package gui.despesa;
+package gui.dialogWindows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -20,24 +20,12 @@ public class AdicionarCategoriaDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textCategoria;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			AdicionarCategoriaDialog dialog = new AdicionarCategoriaDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	private String nome;
 	/**
 	 * Create the dialog.
 	 */
-	public AdicionarCategoriaDialog() {
+	public AdicionarCategoriaDialog(String tab) {
+		nome = tab;
 		setBounds(100, 100, 450, 180);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -49,7 +37,7 @@ public class AdicionarCategoriaDialog extends JDialog {
 		contentPanel.add(btnAdicionar);
 		btnAdicionar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				InsertDadosDao.insertCategoria("Despesas", textCategoria.getText());
+				InsertDadosDao.insertCategoria(nome, textCategoria.getText());
 				dispose();
 			}
 		});

@@ -29,5 +29,28 @@ public class RemoveDadosDao {
 			System.out.println(e.getMessage());
 		}
 	}
+	
+	public static void removeTupla(String tabela, String codigo) {
+		Statement st = null;
+		try {
+			try {
+				Connection conn = BancoDados.conectar();
+				System.out.println("Conexão estabelecida.");
+
+				String statement = "delete from " + tabela + " where codigo = \"" + codigo+"\"";
+				System.out.println(statement);
+				
+				st = conn.createStatement();
+				st.executeUpdate(statement);
+				
+			} finally {
+
+				BancoDados.finalizarStatement(st);
+				BancoDados.desconectar();
+			}
+		} catch (SQLException | IOException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
 }

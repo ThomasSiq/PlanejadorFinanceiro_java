@@ -24,33 +24,19 @@ public class GetTabelasDao {
 				st = conn.prepareStatement("select * from " + tabela);
 				rs = st.executeQuery();
 
-				if (tabela == "rendimentos") {
-					while (rs.next()) {
-						ArrayList<Object> tupla = new ArrayList();
-						tupla.add(rs.getString("categoria"));
-						tupla.add(rs.getString("rendimento"));
-						tupla.add(rs.getDouble("mensal"));
-						tupla.add(rs.getDouble("ocasional"));
-						tupla.add(rs.getDouble("total"));
+				while (rs.next()) {
+					ArrayList<Object> tupla = new ArrayList();
+					tupla.add(rs.getInt("codigo"));
+					tupla.add(rs.getInt("ano"));
+					tupla.add(rs.getInt("mes"));
+					tupla.add(rs.getInt("duracao"));
+					tupla.add(rs.getString("categoria"));
+					tupla.add(rs.getString("nome"));
+					tupla.add(rs.getDouble("mensal"));
+					tupla.add(rs.getDouble("ocasional"));
+					tupla.add(rs.getDouble("total"));
 
-						lista.add(tupla);
-					}
-				}
-				else if(tabela == "despesas") {
-					while (rs.next()) {
-						ArrayList<Object> tupla = new ArrayList();
-						tupla.add(rs.getInt("codigo"));
-						tupla.add(rs.getInt("ano"));
-						tupla.add(rs.getInt("mes"));
-						tupla.add(rs.getInt("duracao"));
-						tupla.add(rs.getString("categoria"));
-						tupla.add(rs.getString("despesa"));
-						tupla.add(rs.getDouble("mensal"));
-						tupla.add(rs.getDouble("ocasional"));
-						tupla.add(rs.getDouble("total"));
-
-						lista.add(tupla);
-					}
+					lista.add(tupla);
 				}
 
 			} finally {
@@ -61,11 +47,11 @@ public class GetTabelasDao {
 			}
 
 		} catch (SQLException | IOException e) {
-			System.out.println(">>>"+e.getMessage());
+			System.out.println(">>>" + e.getMessage());
 		}
 		return lista;
 	}
-	
+
 	public static ArrayList<Integer> getTableYears(String tabela) {
 
 		ArrayList<Integer> anos = new ArrayList();
@@ -78,7 +64,7 @@ public class GetTabelasDao {
 			ResultSet rs = null;
 
 			try {
-				st = conn.prepareStatement("select distinct ano from " + tabela+" order by ano DESC");
+				st = conn.prepareStatement("select distinct ano from " + tabela + " order by ano DESC");
 				rs = st.executeQuery();
 
 				while (rs.next()) {

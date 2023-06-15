@@ -1,4 +1,4 @@
-package gui.despesa;
+package gui.dialogWindows;
 
 import java.awt.BorderLayout; 
 import java.awt.FlowLayout;
@@ -23,31 +23,19 @@ public class EditarCategoriaDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private final JComboBox comboBox;
 	private final JEditorPane editorPane;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditarCategoriaDialog dialog = new EditarCategoriaDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+	private String nome;
 	/**
 	 * Create the dialog.
 	 */
-	public EditarCategoriaDialog() {
+	public EditarCategoriaDialog(String tab) {
+		nome = tab;
 		setBounds(100, 100, 450, 213);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		Object[] lista = PegaDadosDao.getCategoria("Despesas").toArray();
+		Object[] lista = PegaDadosDao.getCategoria(nome).toArray();
 		comboBox = new JComboBox(lista);
 		comboBox.setBounds(133, 20, 272, 37);
 		
@@ -64,7 +52,7 @@ public class EditarCategoriaDialog extends JDialog {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				EditarDadosDao.editarCategoria("Despesas",(String)comboBox.getSelectedItem(),editorPane.getText() );
+				EditarDadosDao.editarCategoria(nome,(String)comboBox.getSelectedItem(),editorPane.getText() );
 				dispose();
 			}
 		});

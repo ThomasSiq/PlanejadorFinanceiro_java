@@ -1,4 +1,4 @@
-package gui.despesa;
+package gui.dialogWindows;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -19,35 +19,24 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-public class RemoveCategoriaDespesaDialog extends JDialog {
+public class RemoveCategoriaDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private final JComboBox comboBox;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			RemoveCategoriaDespesaDialog dialog = new RemoveCategoriaDespesaDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private String nome;
 
 	/**
 	 * Create the dialog.
 	 */
-	public RemoveCategoriaDespesaDialog() {
+	public RemoveCategoriaDialog(String tab) {
+		nome = tab;
 		setBounds(100, 100, 450, 183);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		Object[] lista = PegaDadosDao.getCategoria("Despesas").toArray();
+		Object[] lista = PegaDadosDao.getCategoria(nome).toArray();
 		comboBox = new JComboBox(lista);
 		comboBox.setBounds(133, 20, 272, 37);
 		contentPanel.add(comboBox);
@@ -56,7 +45,7 @@ public class RemoveCategoriaDespesaDialog extends JDialog {
 		btnRemover.setBounds(73, 95, 105, 37);
 		btnRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RemoveDadosDao.removeCategoria("Despesas",(String)comboBox.getSelectedItem());
+				RemoveDadosDao.removeCategoria(nome,(String)comboBox.getSelectedItem());
 				dispose();
 			}
 		});
