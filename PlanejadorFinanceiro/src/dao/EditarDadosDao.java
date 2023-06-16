@@ -31,7 +31,7 @@ public class EditarDadosDao {
 		try {
 			try {
 				Connection conn = BancoDados.conectar();
-				String statement = "update " + tabela + " set categoria = \"" +categoria+ "\", ano = \""+ano+"\" , despesa = \""+despesa+"\", mensal = \""+mensal+"\", ocasional = \""+ocasional+"\"    where codigo = "+codigo;
+				String statement = "update " + tabela + " set categoria = \"" +categoria+ "\", ano = \""+ano+"\" , nome = \""+despesa+"\", mensal = \""+mensal+"\", ocasional = \""+ocasional+"\"    where codigo = "+codigo;
 				System.out.println(statement);
 				st = conn.createStatement();
 				st.executeUpdate(statement);

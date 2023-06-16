@@ -1,7 +1,9 @@
 package gui.btnpanel;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -9,83 +11,133 @@ import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JCheckBox;
+import javax.swing.SwingConstants;
+
+import gui.contentpanel.ContentPanelResumo;
 
 public class ButtonsPanelResumo extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
-	public ButtonsPanelResumo(ActionListener evento) {
+	private ArrayList<String> nomes = new ArrayList();
+	private JCheckBox chckbxTotalDespesas;
+	private JCheckBox chckbxNewCheckBox;
+	private JCheckBox chckbxInvestimentoDeLongo;
+	private JCheckBox chckbxFundosPDespesas;
+	private JCheckBox chckbxTotalDisponivel;
+	private JCheckBox chckbxResultado;
+	private ContentPanelResumo ctpanelResumo;
+
+	public ButtonsPanelResumo(ActionListener evento, ContentPanelResumo ctpanel) {
+		ctpanelResumo = ctpanel;
+		nomes.add("Rendimentos");
+		nomes.add("Despesas");
+
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
 		homeButton.setBounds(103, 11, 84, 23);
 		homeButton.addActionListener(evento);
-		
-		JButton btnRendimentos = new JButton("Rendimentos");
-		btnRendimentos.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnRendimentos.setBounds(10, 190, 257, 39);
-		
-		
-		JButton btnLongoPrazo = new JButton("Investimentos Longo Prazo");
-		btnLongoPrazo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnLongoPrazo.setBounds(10, 240, 257, 39);
-		
-		JButton btnDespesasOcasionais = new JButton("Fundos P/ despesas ocasionais");
-		btnDespesasOcasionais.setToolTipText("");
-		btnDespesasOcasionais.addActionListener(evento);
-		btnDespesasOcasionais.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnDespesasOcasionais.setBounds(10, 290, 257, 47);
 		setLayout(null);
 		add(homeButton);
-		add(btnRendimentos);
-		add(btnLongoPrazo);
-		add(btnDespesasOcasionais);
-		
-		JButton btnDisponivel = new JButton("Total disponivel");
-		btnDisponivel.setToolTipText("");
-		btnDisponivel.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnDisponivel.setBounds(10, 348, 257, 47);
-		add(btnDisponivel);
-		
-		JButton btnDespesasOrcadas = new JButton("Despesas totais");
-		btnDespesasOrcadas.setToolTipText("");
-		btnDespesasOrcadas.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnDespesasOrcadas.setBounds(10, 406, 257, 47);
-		add(btnDespesasOrcadas);
-		
-		JButton btnTotal = new JButton("Resultado");
-		btnTotal.setToolTipText("");
-		btnTotal.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
-		btnTotal.setBounds(10, 464, 257, 47);
-		add(btnTotal);
-		
-		JLabel lblPeriodo = new JLabel("Periodo");
-		lblPeriodo.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblPeriodo.setBounds(21, 102, 121, 23);
-		add(lblPeriodo);
-		
-		JPanel radioPanel = new JPanel();
-		radioPanel.setBounds(118, 102, 126, 33);
-		add(radioPanel);
-		
-		JRadioButton rdbtnMes = new JRadioButton("Mês");
-		radioPanel.add(rdbtnMes);
-		
-		JRadioButton rdbtnAno = new JRadioButton("Ano");
-		radioPanel.add(rdbtnAno);
-		
-		JComboBox comboBoxMes = new JComboBox();
-		comboBoxMes.setBounds(141, 146, 126, 22);
-		add(comboBoxMes);
-		
-		JComboBox comboBoxAno = new JComboBox();
-		comboBoxAno.setBounds(10, 146, 98, 22);
-		add(comboBoxAno);
-		
+
 		JLabel lblResumo = new JLabel("Resumo");
 		lblResumo.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 28));
 		lblResumo.setBounds(85, 55, 111, 39);
 		add(lblResumo);
-		
+
+		chckbxNewCheckBox = new JCheckBox("Rendimentos");
+		chckbxNewCheckBox.setSelected(true);
+		chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		chckbxNewCheckBox.setBounds(16, 113, 258, 39);
+		chckbxNewCheckBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxNewCheckBox);
+
+		chckbxInvestimentoDeLongo = new JCheckBox("Investimento de Longo Prazo");
+		chckbxInvestimentoDeLongo.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxInvestimentoDeLongo.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		chckbxInvestimentoDeLongo.setBounds(16, 203, 258, 39);
+		chckbxInvestimentoDeLongo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxInvestimentoDeLongo);
+
+		chckbxFundosPDespesas = new JCheckBox("Fundos p/ Despesas Ocasionais");
+		chckbxFundosPDespesas.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxFundosPDespesas.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		chckbxFundosPDespesas.setBounds(16, 248, 258, 39);
+		chckbxFundosPDespesas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxFundosPDespesas);
+
+		chckbxTotalDisponivel = new JCheckBox("Total Disponivel");
+		chckbxTotalDisponivel.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxTotalDisponivel.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		chckbxTotalDisponivel.setBounds(16, 293, 258, 39);
+		chckbxTotalDisponivel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxTotalDisponivel);
+
+		chckbxTotalDespesas = new JCheckBox("Total Despesas");
+		chckbxTotalDespesas.setSelected(true);
+		chckbxTotalDespesas.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxTotalDespesas.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		chckbxTotalDespesas.setBounds(16, 158, 258, 39);
+		chckbxTotalDespesas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxTotalDespesas);
+
+		chckbxResultado = new JCheckBox("Resultado");
+		chckbxResultado.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxResultado.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		chckbxResultado.setBounds(16, 338, 258, 39);
+		chckbxResultado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				mudaNomes(ctpanelResumo);
+			}
+		});
+		add(chckbxResultado);
+
+	}
+
+	private void mudaNomes(ContentPanelResumo ctpanelResumo) {
+		nomes.clear();
+		if (chckbxNewCheckBox.isSelected()) {
+			nomes.add("Rendimentos");
+		}
+
+		if (chckbxFundosPDespesas.isSelected()) {
+			nomes.add("Ocasional");
+		}
+
+		if (chckbxInvestimentoDeLongo.isSelected()) {
+			nomes.add("LongoPrazo");
+		}
+		if (chckbxTotalDespesas.isSelected()) {
+			nomes.add("Despesas");
+		}
+
+		if (chckbxTotalDisponivel.isSelected()) {
+			nomes.add("Total Disponivel");
+		}
+
+		if (chckbxResultado.isSelected()) {
+			nomes.add("Resultado");
+		}
+		ctpanelResumo.setNomes(nomes);
 	}
 }

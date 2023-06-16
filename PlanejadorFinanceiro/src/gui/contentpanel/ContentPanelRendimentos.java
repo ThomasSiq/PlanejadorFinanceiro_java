@@ -278,7 +278,7 @@ public class ContentPanelRendimentos extends JPanel {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
 				if (anos.get(i) <= (int) (comboBox_1.getSelectedItem())) {
-					for(int j =1; j <13; j++) {
+					for(int j =12; j >0; j--) {
 						Integer[] temp = new Integer[2];
 						temp[0]=anos.get(i);
 						temp[1] = j;
@@ -290,7 +290,7 @@ public class ContentPanelRendimentos extends JPanel {
 			}
 			if (anos.get(i) <= (int) (comboBox.getSelectedItem())) {
 				if (anos.get(i) >= (int) (comboBox_1.getSelectedItem())) {
-					for(int j = 1; j<13; j++) {
+					for(int j =12; j >0; j--) {
 						Integer[] temp = new Integer[2];
 						temp[0]=anos.get(i);
 						temp[1] = j;

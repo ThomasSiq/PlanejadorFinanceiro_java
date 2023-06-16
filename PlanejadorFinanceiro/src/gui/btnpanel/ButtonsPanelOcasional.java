@@ -1,13 +1,24 @@
 package gui.btnpanel;
 
 import java.awt.Font;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+
+import gui.dialogWindows.AdicionarDialog;
+import gui.dialogWindows.AdicionarDialogMenor;
+import gui.dialogWindows.EditarDialog;
+import gui.dialogWindows.EditarDialogMenor;
+import gui.dialogWindows.ExcluirDialog;
+import gui.dialogWindows.ExcluirDialogMenor;
+
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
 
@@ -16,7 +27,7 @@ public class ButtonsPanelOcasional extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public ButtonsPanelOcasional(ActionListener evento) {
+	public ButtonsPanelOcasional(ActionListener evento, final WindowListener att) {
 		
 		setBounds(10, 11, 277, 528);
 		
@@ -30,17 +41,35 @@ public class ButtonsPanelOcasional extends JPanel {
 		JButton btnNovo = new JButton("Novo");
 		btnNovo.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnNovo.setBounds(75, 254, 128, 54);
+		btnNovo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdicionarDialogMenor diag = new AdicionarDialogMenor("Ocasional", att);
+				diag.setVisible(true);
+			}
+		});
 		add(btnNovo);
 		
 		JButton btnEditarCategoria_1 = new JButton("Editar");
 		btnEditarCategoria_1.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnEditarCategoria_1.setBounds(75, 319, 128, 54);
+		btnEditarCategoria_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditarDialogMenor diag = new EditarDialogMenor("Ocasional", att);
+				diag.setVisible(true);
+			}
+		});
 		add(btnEditarCategoria_1);
 		
 		JButton btnExcluirCategoria_1 = new JButton("Excluir");
 		btnExcluirCategoria_1.setToolTipText("");
 		btnExcluirCategoria_1.setFont(new Font("Nirmala UI Semilight", Font.PLAIN, 23));
 		btnExcluirCategoria_1.setBounds(75, 388, 128, 54);
+		btnExcluirCategoria_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ExcluirDialogMenor diag = new ExcluirDialogMenor("Ocasional", att);
+				diag.setVisible(true);
+			}
+		});
 		add(btnExcluirCategoria_1);
 		
 		JTextArea txtrFundoParaDespesas = new JTextArea();

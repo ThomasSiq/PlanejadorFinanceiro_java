@@ -46,8 +46,7 @@ public class MainWindow extends JFrame {
 	private JPanel ctpanelRendimentos;
 	private JPanel ctpanelDespesas;
 	private JPanel ctpanelLongoPrazo;
-	private JPanel ctpanelResumoAnual;
-	private JPanel ctpanelResumoMensal;
+	private JPanel ctpanelResumo;
 	private JPanel ctpanelOcasionais;
 
 	ArrayList<JPanel> janelas;
@@ -83,8 +82,7 @@ public class MainWindow extends JFrame {
 		ctpanelRendimentos.setVisible(false);
 		ctpanelDespesas.setVisible(false);
 		ctpanelLongoPrazo.setVisible(false);
-		ctpanelResumoAnual.setVisible(false);
-		ctpanelResumoMensal.setVisible(false);
+		ctpanelResumo.setVisible(false);
 		ctpanelOcasionais.setVisible(false);
 
 		if (nome == "Home") {
@@ -99,7 +97,7 @@ public class MainWindow extends JFrame {
 			ctpanelLongoPrazo.setVisible(true);
 			btpanelLongoPrazo.setVisible(true);
 		} else if (nome == "Resumo") {
-			ctpanelResumoAnual.setVisible(true);
+			ctpanelResumo.setVisible(true);
 			btpanelResumo.setVisible(true);
 		} else if (nome == "Relatorio") {
 			btpanelRelatorio.setVisible(true);
@@ -148,6 +146,8 @@ public class MainWindow extends JFrame {
             public void windowClosed(WindowEvent e) {
             	((ContentPanelRendimentos)ctpanelRendimentos).attTabelas();
             	((ContentPanelDespesas)ctpanelDespesas).attTabelas();
+            	((ContentPanelOcasional)ctpanelOcasionais).attTabelas();
+            	((ContentPanelLongoPrazo)ctpanelLongoPrazo).attTabelas();
             }
             public void windowClosing(WindowEvent arg0) {
                 // Do nothing
@@ -176,24 +176,23 @@ public class MainWindow extends JFrame {
 
 		contentPane = new JPanel();
 		buttonsWindow = new JPanel();
-		buttonsWindow.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		buttonsWindow.setBorder(null);
 		contentWindow = new JPanel();
 		contentWindow.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+		
+		ctpanelRendimentos = new ContentPanelRendimentos();
+		ctpanelDespesas = new ContentPanelDespesas();
+		ctpanelLongoPrazo = new ContentPanelLongoPrazo();
+		ctpanelResumo = new ContentPanelResumo();
+		ctpanelOcasionais = new ContentPanelOcasional();
 
 		btpanelHome = new ButtonsPanelHome(evento);
 		btpanelRendimentos = new ButtonsPanelRendimentos(evento, att);
 		btpanelDespesas = new ButtonsPanelDespesas(evento, att);
-		btpanelLongoPrazo = new ButtonsPanelLongoPrazo(evento);
-		btpanelResumo = new ButtonsPanelResumo(evento);
+		btpanelLongoPrazo = new ButtonsPanelLongoPrazo(evento, att);
+		btpanelResumo = new ButtonsPanelResumo(evento, (ContentPanelResumo)ctpanelResumo);
 		btpanelRelatorio = new ButtonsPanelRelatorio(evento);
-		btpanelOcasionais = new ButtonsPanelOcasional(evento);
-
-		ctpanelRendimentos = new ContentPanelRendimentos();
-		ctpanelDespesas = new ContentPanelDespesas();
-		ctpanelLongoPrazo = new ContentPanelLongoPrazo();
-		ctpanelResumoAnual = new ContentPanelResumoAnual();
-		ctpanelResumoMensal = new ContentPanelResumoMensal();
-		ctpanelOcasionais = new ContentPanelOcasional();
+		btpanelOcasionais = new ButtonsPanelOcasional(evento, att);
 
 		janelas.add(btpanelHome);
 		janelas.add(btpanelRendimentos);
@@ -207,8 +206,7 @@ public class MainWindow extends JFrame {
 		janelasConteudo.add(ctpanelRendimentos);
 		janelasConteudo.add(ctpanelDespesas);
 		janelasConteudo.add(ctpanelLongoPrazo);
-		janelasConteudo.add(ctpanelResumoAnual);
-		janelasConteudo.add(ctpanelResumoMensal);
+		janelasConteudo.add(ctpanelResumo);
 		janelasConteudo.add(ctpanelOcasionais);
 
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -237,7 +235,7 @@ public class MainWindow extends JFrame {
 			contentWindow.add(panel);
 			panel.setVisible(false);
 		}
-		ctpanelResumoAnual.setVisible(true);
+		ctpanelResumo.setVisible(true);
 
 	}
 }

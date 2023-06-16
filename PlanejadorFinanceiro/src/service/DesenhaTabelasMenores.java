@@ -16,15 +16,16 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
-import enumdata.MesesEnum;
-public class DesenhaTabelasDinamicas {
-	static JTable table_1;
 
-	public static void desenhaTabelasAnos(Object[][] valores, Object[][] valor, ArrayList<Integer> anosPeriodo,
+import enumdata.MesesEnum;
+
+public class DesenhaTabelasMenores {
+	static JTable table_1;
+	public static void desenhaTabelasMenoresAnos(Object[][] valores, Object[][] valor, ArrayList<Integer> anosPeriodo,
 			Object[][] tabela, JTable table_11, JPanel internPanel,ArrayList<JTable> tablesList) {
 
 		table_1 = table_11;
-		valores = valoresTuplas(tabela);
+		valores = valoresTuplasMenores(tabela);
 
 		valor = new Object[valores.length][valores[0].length];
 		for (int i = 0; i < valores.length; i++) {
@@ -49,13 +50,13 @@ public class DesenhaTabelasDinamicas {
 				}
 			}
 
-			Object[][] tabelaTabela = new Object[tabelaLocal.size()][5];
+			Object[][] tabelaTabela = new Object[tabelaLocal.size()][4];
 
 			for (Object[] val : tabelaLocal) {
 				tabelaTabela[tabelaLocal.indexOf(val)] = val;
-				valoresTotal[0] += (double) val[2];
-				valoresTotal[1] += (double) val[3];
-				valoresTotal[2] += (double) val[4];
+				valoresTotal[0] += (double) val[1];
+				valoresTotal[1] += (double) val[2];
+				valoresTotal[2] += (double) val[3];
 			}
 			valoresTotalOb[0][1] = valoresTotal[0];
 			valoresTotalOb[0][2] = valoresTotal[1];
@@ -75,8 +76,8 @@ public class DesenhaTabelasDinamicas {
 
 			table.setTableHeader(null);
 			table.setModel(new DefaultTableModel(tabelaTabela,
-					new String[] { "Categoria", "Despesa", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
-				Class[] columnTypes = new Class[] { String.class, String.class, Double.class, Double.class,
+					new String[] { "Fundo Ocasional", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
+				Class[] columnTypes = new Class[] { String.class, Double.class, Double.class, Double.class,
 						Double.class };
 
 				public Class getColumnClass(int columnIndex) {
@@ -89,7 +90,7 @@ public class DesenhaTabelasDinamicas {
 			table_2.setFont(new Font("Monospaced", Font.BOLD, 19));
 			table_2.setTableHeader(null);
 			table_2.setModel(new DefaultTableModel(valoresTotalOb,
-					new String[] { "Categoria", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
+					new String[] { "Fundo Ocasional", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
 				Class[] columnTypes = new Class[] { String.class, Double.class, Double.class, Double.class };
 
 				public Class getColumnClass(int columnIndex) {
@@ -102,14 +103,13 @@ public class DesenhaTabelasDinamicas {
 				public void componentResized(ComponentEvent e) {
 					JTable table = (JTable) e.getSource();
 					table.getColumnModel().getColumn(0)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(0).getWidth()
-									+ table_1.getColumnModel().getColumn(1).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(0).getWidth());
 					table.getColumnModel().getColumn(1)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(1).getWidth());
 					table.getColumnModel().getColumn(2)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
 					table.getColumnModel().getColumn(3)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(4).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
 				}
 			});
 			table.addComponentListener(new ComponentAdapter() {
@@ -123,8 +123,6 @@ public class DesenhaTabelasDinamicas {
 							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
 					table.getColumnModel().getColumn(3)
 							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
-					table.getColumnModel().getColumn(4)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(4).getWidth());
 				}
 			});
 
@@ -147,11 +145,11 @@ public class DesenhaTabelasDinamicas {
 		}
 	}
 	
-	public static void desenhaTabelasMeses(Object[][] valores, Object[][] valor, ArrayList<Integer[]> mesesPeriodo,
+	public static void desenhaTabelasMenoresMeses(Object[][] valores, Object[][] valor, ArrayList<Integer[]> mesesPeriodo,
 			Object[][] tabela, JTable table_11, JPanel internPanel,ArrayList<JTable> tablesList) {
 
 		table_1 = table_11;
-		valores = valoresTuplas(tabela);
+		valores = valoresTuplasMenores(tabela);
 
 		valor = new Object[valores.length][valores[0].length];
 		for (int i = 0; i < valores.length; i++) {
@@ -185,12 +183,12 @@ public class DesenhaTabelasDinamicas {
 			Object[][] tabelaTabela = new Object[tabelaLocal.size()][5];
 
 			for (Object[] val : tabelaLocal) {
-				val[4] = (double) val[3] + (double)val[2];
+				val[3] = (double) val[2] + (double)val[1];
 				tabelaTabela[tabelaLocal.indexOf(val)] = val;
 				
-				valoresTotal[0] += (double) val[2];
-				valoresTotal[1] += (double) val[3];
-				valoresTotal[2] += (double) val[4];
+				valoresTotal[0] += (double) val[1];
+				valoresTotal[1] += (double) val[2];
+				valoresTotal[2] += (double) val[3];
 			}
 			valoresTotalOb[0][1] = valoresTotal[0];
 			valoresTotalOb[0][2] = valoresTotal[1];
@@ -210,8 +208,8 @@ public class DesenhaTabelasDinamicas {
 
 			table.setTableHeader(null);
 			table.setModel(new DefaultTableModel(tabelaTabela,
-					new String[] { "Categoria", "Despesa", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
-				Class[] columnTypes = new Class[] { String.class, String.class, Double.class, Double.class,
+					new String[] { "Fundo Ocasional", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
+				Class[] columnTypes = new Class[] { String.class, Double.class, Double.class,
 						Double.class };
 
 				public Class getColumnClass(int columnIndex) {
@@ -224,7 +222,7 @@ public class DesenhaTabelasDinamicas {
 			table_2.setFont(new Font("Monospaced", Font.BOLD, 19));
 			table_2.setTableHeader(null);
 			table_2.setModel(new DefaultTableModel(valoresTotalOb,
-					new String[] { "Categoria", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
+					new String[] { "Fundo Ocasional", "Mensal [R$]", "Ocasional [R$]", "Total Anual [R$]" }) {
 				Class[] columnTypes = new Class[] { String.class, Double.class, Double.class, Double.class };
 
 				public Class getColumnClass(int columnIndex) {
@@ -237,14 +235,13 @@ public class DesenhaTabelasDinamicas {
 				public void componentResized(ComponentEvent e) {
 					JTable table = (JTable) e.getSource();
 					table.getColumnModel().getColumn(0)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(0).getWidth()
-									+ table_1.getColumnModel().getColumn(1).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(0).getWidth());
 					table.getColumnModel().getColumn(1)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(1).getWidth());
 					table.getColumnModel().getColumn(2)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
 					table.getColumnModel().getColumn(3)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(4).getWidth());
+							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
 				}
 			});
 			table.addComponentListener(new ComponentAdapter() {
@@ -258,8 +255,6 @@ public class DesenhaTabelasDinamicas {
 							.setPreferredWidth(table_1.getColumnModel().getColumn(2).getWidth());
 					table.getColumnModel().getColumn(3)
 							.setPreferredWidth(table_1.getColumnModel().getColumn(3).getWidth());
-					table.getColumnModel().getColumn(4)
-							.setPreferredWidth(table_1.getColumnModel().getColumn(4).getWidth());
 				}
 			});
 
@@ -281,17 +276,20 @@ public class DesenhaTabelasDinamicas {
 			tablesList.add(table);
 		}
 	}
-	private static Object[][] valoresTuplas(Object[][] tabela) {
+	
+	
+	private static Object[][] valoresTuplasMenores(Object[][] tabela) {
 		if (tabela.length == 0)
 			return tabela;
 
 		Object[][] retorno = new Object[tabela.length][5];
 		for (int i = 0; i < tabela.length; i++) {
-			retorno[i] = Arrays.copyOfRange(tabela[i], 4, tabela[0].length);
-			retorno[i][4] = (int) tabela[i][3] * (double) tabela[i][6] + (double) tabela[i][7];
+			retorno[i] = Arrays.copyOfRange(tabela[i], 5, tabela[0].length);
+			retorno[i][3] = (int) tabela[i][3] * (double) tabela[i][6] + (double) tabela[i][7];
 		}
 		return retorno;
 	}
 	
-
+	
+	
 }
