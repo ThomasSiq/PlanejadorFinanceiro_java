@@ -1,6 +1,7 @@
 package gui.btnpanel;
 
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 
 import gui.contentpanel.ContentPanelResumo;
+import javax.swing.JSeparator;
 
 public class ButtonsPanelResumo extends JPanel {
 
@@ -26,29 +28,32 @@ public class ButtonsPanelResumo extends JPanel {
 	private JCheckBox chckbxTotalDisponivel;
 	private JCheckBox chckbxResultado;
 	private ContentPanelResumo ctpanelResumo;
+	private JSeparator separator;
 
 	public ButtonsPanelResumo(ActionListener evento, ContentPanelResumo ctpanel) {
+		this.setName("Resumo");
 		ctpanelResumo = ctpanel;
 		nomes.add("Rendimentos");
 		nomes.add("Despesas");
 
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
-		homeButton.setBounds(103, 11, 84, 23);
+		homeButton.setBounds(100, 11, 84, 23);
 		homeButton.addActionListener(evento);
 		setLayout(null);
 		add(homeButton);
 
 		JLabel lblResumo = new JLabel("Resumo");
-		lblResumo.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 28));
-		lblResumo.setBounds(85, 55, 111, 39);
+		lblResumo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblResumo.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 34));
+		lblResumo.setBounds(0, 95, 291, 39);
 		add(lblResumo);
 
 		chckbxNewCheckBox = new JCheckBox("Rendimentos");
 		chckbxNewCheckBox.setSelected(true);
 		chckbxNewCheckBox.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxNewCheckBox.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		chckbxNewCheckBox.setBounds(16, 113, 258, 39);
+		chckbxNewCheckBox.setBounds(16, 147, 258, 39);
 		chckbxNewCheckBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
@@ -59,7 +64,7 @@ public class ButtonsPanelResumo extends JPanel {
 		chckbxInvestimentoDeLongo = new JCheckBox("Investimento de Longo Prazo");
 		chckbxInvestimentoDeLongo.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxInvestimentoDeLongo.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		chckbxInvestimentoDeLongo.setBounds(16, 203, 258, 39);
+		chckbxInvestimentoDeLongo.setBounds(16, 189, 258, 39);
 		chckbxInvestimentoDeLongo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
@@ -70,7 +75,7 @@ public class ButtonsPanelResumo extends JPanel {
 		chckbxFundosPDespesas = new JCheckBox("Fundos p/ Despesas Ocasionais");
 		chckbxFundosPDespesas.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxFundosPDespesas.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		chckbxFundosPDespesas.setBounds(16, 248, 258, 39);
+		chckbxFundosPDespesas.setBounds(16, 234, 258, 39);
 		chckbxFundosPDespesas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
@@ -81,7 +86,7 @@ public class ButtonsPanelResumo extends JPanel {
 		chckbxTotalDisponivel = new JCheckBox("Total Disponivel");
 		chckbxTotalDisponivel.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxTotalDisponivel.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		chckbxTotalDisponivel.setBounds(16, 293, 258, 39);
+		chckbxTotalDisponivel.setBounds(16, 330, 258, 39);
 		chckbxTotalDisponivel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
@@ -93,7 +98,7 @@ public class ButtonsPanelResumo extends JPanel {
 		chckbxTotalDespesas.setSelected(true);
 		chckbxTotalDespesas.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxTotalDespesas.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		chckbxTotalDespesas.setBounds(16, 158, 258, 39);
+		chckbxTotalDespesas.setBounds(16, 285, 258, 39);
 		chckbxTotalDespesas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
@@ -104,13 +109,18 @@ public class ButtonsPanelResumo extends JPanel {
 		chckbxResultado = new JCheckBox("Resultado");
 		chckbxResultado.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxResultado.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		chckbxResultado.setBounds(16, 338, 258, 39);
+		chckbxResultado.setBounds(16, 372, 258, 39);
 		chckbxResultado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mudaNomes(ctpanelResumo);
 			}
 		});
 		add(chckbxResultado);
+		
+		separator = new JSeparator();
+		separator.setBounds(10, 46, 264, 7);
+		separator.setForeground(SystemColor.controlShadow);
+		add(separator);
 
 	}
 

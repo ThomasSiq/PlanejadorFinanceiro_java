@@ -1,33 +1,39 @@
 package gui.btnpanel;
 
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
-import gui.dialogWindows.AdicionarCategoriaDialog;
-import gui.dialogWindows.AdicionarDialog;
-import gui.dialogWindows.EditarCategoriaDialog;
-import gui.dialogWindows.EditarDialog;
-import gui.dialogWindows.ExcluirDialog;
-import gui.dialogWindows.RemoveCategoriaDialog;
+import gui.dialogwindows.AdicionarCategoriaDialog;
+import gui.dialogwindows.AdicionarDialog;
+import gui.dialogwindows.EditarCategoriaDialog;
+import gui.dialogwindows.EditarDialog;
+import gui.dialogwindows.ExcluirDialog;
+import gui.dialogwindows.RemoveCategoriaDialog;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
 
 public class ButtonsPanelRendimentos extends JPanel {
+	
+	
 
 	/**
 	 * Create the panel.
 	 */
-	public ButtonsPanelRendimentos(ActionListener evento,final WindowListener att) {
+	public ButtonsPanelRendimentos(ActionListener evento, final WindowListener att) {
+		setName("Rendimentos");
 
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
-		homeButton.setBounds(103, 11, 84, 23);
+		homeButton.setBounds(100, 11, 84, 23);
 		homeButton.addActionListener(evento);
 
 		JButton btnNovaCategoria = new JButton("Nova");
@@ -37,6 +43,7 @@ public class ButtonsPanelRendimentos extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				AdicionarCategoriaDialog diag = new AdicionarCategoriaDialog("Rendimentos");
 				diag.setVisible(true);
+				Component com = (Component) (e.getSource());
 			}
 		});
 
@@ -67,12 +74,6 @@ public class ButtonsPanelRendimentos extends JPanel {
 		add(btnNovaCategoria);
 		add(btnEditarCategoria);
 		add(btnExcluirCategoria);
-
-		JTextPane txtpnDespesas = new JTextPane();
-		txtpnDespesas.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 30));
-		txtpnDespesas.setText("Rendimentos");
-		txtpnDespesas.setBounds(36, 54, 212, 36);
-		add(txtpnDespesas);
 		
 
 		JButton btnNovo = new JButton("Novo");
@@ -109,18 +110,29 @@ public class ButtonsPanelRendimentos extends JPanel {
 		});
 	
 		add(btnExcluirCategoria_1);
-
-		JTextPane txtpnCategorias = new JTextPane();
-		txtpnCategorias.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtpnCategorias.setText("  Categorias");
-		txtpnCategorias.setBounds(10, 209, 128, 34);
-		add(txtpnCategorias);
-
-		JTextPane txtpnRendimentos = new JTextPane();
-		txtpnRendimentos.setText("Rendimentos");
-		txtpnRendimentos.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtpnRendimentos.setBounds(148, 209, 128, 34);
-		add(txtpnRendimentos);
+		
+		JLabel lblRendimentos = new JLabel("Rendimentos");
+		lblRendimentos.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRendimentos.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 34));
+		lblRendimentos.setBounds(0, 80, 277, 43);
+		add(lblRendimentos);
+		
+		JLabel lblNewLabel_1 = new JLabel("Categorias");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel_1.setBounds(10, 215, 128, 28);
+		add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Rendimentos");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel_1_1.setBounds(148, 215, 128, 28);
+		add(lblNewLabel_1_1);
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(SystemColor.controlShadow);
+		separator.setBounds(10, 45, 264, 7);
+		add(separator);
 
 	}
 }

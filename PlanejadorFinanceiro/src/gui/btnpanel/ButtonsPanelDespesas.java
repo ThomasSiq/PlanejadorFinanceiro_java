@@ -1,14 +1,7 @@
 package gui.btnpanel;
 
-import java.awt.Font; 
-
-import gui.dialogWindows.AdicionarCategoriaDialog;
-import gui.dialogWindows.AdicionarDialog;
-import gui.dialogWindows.EditarCategoriaDialog;
-import gui.dialogWindows.EditarDialog;
-import gui.dialogWindows.ExcluirDialog;
-import gui.dialogWindows.RemoveCategoriaDialog;
-
+import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
@@ -21,13 +14,24 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import dao.RemoveDadosDao;
+import gui.dialogwindows.AdicionarCategoriaDialog;
+import gui.dialogwindows.AdicionarDialog;
+import gui.dialogwindows.EditarCategoriaDialog;
+import gui.dialogwindows.EditarDialog;
+import gui.dialogwindows.ExcluirDialog;
+import gui.dialogwindows.RemoveCategoriaDialog;
+import javax.swing.JLabel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 public class ButtonsPanelDespesas extends JPanel {
+	
 
 	/**
 	 * Create the panel.
 	 */
 	public ButtonsPanelDespesas(ActionListener evento, final WindowListener att) {
+		this.setName("Despesas");
 
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
@@ -71,12 +75,6 @@ public class ButtonsPanelDespesas extends JPanel {
 		add(btnNovaCategoria);
 		add(btnEditarCategoria);
 		add(btnExcluirCategoria);
-
-		JTextPane txtpnDespesas = new JTextPane();
-		txtpnDespesas.setFont(new Font("UD Digi Kyokasho NK-B", Font.PLAIN, 30));
-		txtpnDespesas.setText("Despesas");
-		txtpnDespesas.setBounds(36, 54, 212, 36);
-		add(txtpnDespesas);
 		
 
 		JButton btnNovo = new JButton("Novo");
@@ -112,18 +110,28 @@ public class ButtonsPanelDespesas extends JPanel {
 			}
 		});
 		add(btnExcluirCategoria_1);
-
-		JTextPane txtpnCategorias = new JTextPane();
-		txtpnCategorias.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtpnCategorias.setText("  Categorias");
-		txtpnCategorias.setBounds(10, 209, 128, 34);
-		add(txtpnCategorias);
-
-		JTextPane txtpnDespesas_1 = new JTextPane();
-		txtpnDespesas_1.setText("Despesas");
-		txtpnDespesas_1.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		txtpnDespesas_1.setBounds(148, 209, 128, 34);
-		add(txtpnDespesas_1);
+		
+		JLabel lblNewLabel = new JLabel("Despesas");
+		lblNewLabel.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 34));
+		lblNewLabel.setBounds(58, 78, 172, 74);
+		add(lblNewLabel);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 45, 273, 2);
+		separator.setForeground(SystemColor.controlShadow);
+		add(separator);
+		
+		JLabel lblNewLabel_1 = new JLabel("Categorias");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(10, 215, 128, 28);
+		add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("Despesas");
+		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel_1_1.setBounds(148, 215, 128, 28);
+		add(lblNewLabel_1_1);
 
 	}
 }

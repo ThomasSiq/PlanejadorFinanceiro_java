@@ -6,7 +6,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -34,15 +34,15 @@ import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ContentPanelDespesas extends JPanel {
+public class ContentPanelDespesas extends ContentPanel {
 	
 	private JPanel internPanel;
 	private JPanel panel;
 	
 	private ArrayList<Integer> anos;
 	private ArrayList<Integer> anosPeriodo;
-	private ArrayList<Integer[]> mesesPeriodo = new ArrayList();
-	private ArrayList<JTable> tablesList = new ArrayList();
+	private ArrayList<Integer[]> mesesPeriodo = new ArrayList<Integer[]>();
+	private ArrayList<JTable> tablesList = new ArrayList<JTable>();
 	
 	private JRadioButton rdbtnAno;
 	private JRadioButton rdbtnNewRadioButton;
@@ -59,11 +59,11 @@ public class ContentPanelDespesas extends JPanel {
 	
 	private JTable table_1;
 	
-	
-	
 
 
-	public ContentPanelDespesas() {
+	@SuppressWarnings("unchecked")
+	public ContentPanelDespesas() throws SQLException {
+		this.setName("Despesas");
 		
 		table_1 = new JTable();
 		internPanel = new JPanel();
@@ -71,7 +71,7 @@ public class ContentPanelDespesas extends JPanel {
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 		
-		updateTabela("Despesas"); //Pega dados das tabelas
+		updateTabela(); //Pega dados das tabelas
 		anosPeriodo = (ArrayList<Integer>) anos.clone();
 
 
@@ -233,17 +233,33 @@ public class ContentPanelDespesas extends JPanel {
 		}
 	};
 
-	private void updateTabela(String nome) {
-		ArrayList<Object> retorno = MainService.getTabela(nome);
+	public void updateTabela() throws SQLException {
+		ArrayList<Object> retorno = MainService.getTabela(this.getName());
 		tabela = (Object[][]) retorno.get(0);
 
 		anos = (ArrayList<Integer>) retorno.get(1);
+		if(comboBox!=null) {
+			comboBox.removeAllItems();
+			comboBox_1.removeAllItems();
+		}
+		
+		for(int ano : anos) {
+			comboBox.addItem(ano);
+			comboBox_1.addItem(ano);
+		}
 	}
 
 	private void mudaAnos() {
 		anosPeriodo.clear();
 		table_1.getColumnModel().getColumn(4).setHeaderValue("Total Anual [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+		
+		if(comboBox.getSelectedItem()==null || comboBox_1.getSelectedItem()==null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
@@ -258,7 +274,7 @@ public class ContentPanelDespesas extends JPanel {
 				}
 			}
 		}
-		internPanel.removeAll();
+		
 		if(tabela.length>0) {
 			DesenhaTabelasDinamicas.desenhaTabelasAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel, tablesList);
 		}
@@ -304,8 +320,8 @@ public class ContentPanelDespesas extends JPanel {
 		internPanel.repaint();
 
 	}
-	public void attTabelas() {
-		updateTabela("Despesas");
+	public void attTabelas() throws SQLException {
+		updateTabela();
 
 		if(rdbtnAno.isSelected()) {
 			mudaAnos();

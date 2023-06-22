@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.lang.reflect.Array;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -37,9 +38,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 
-import dao.GetTabelasDao;
-
-public class ContentPanelRendimentos extends JPanel {
+public class ContentPanelRendimentos extends ContentPanel {
 	private JPanel internPanel;
 	private JPanel panel;
 	
@@ -63,18 +62,18 @@ public class ContentPanelRendimentos extends JPanel {
 	
 	private JTable table_1;
 	
-	private String nome = "Rendimento";
+	private String nome = "Rendimentos";
 	
 	
-	public ContentPanelRendimentos() {
-		
+	public ContentPanelRendimentos() throws SQLException {
+		this.setName("Rendimentos");
 		table_1 = new JTable();
 		internPanel = new JPanel();
 		panel = new JPanel();
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 		
-		updateTabela("Rendimentos"); //Pega dados das tabelas
+		updateTabela(); //Pega dados das tabelas
 		anosPeriodo = (ArrayList<Integer>) anos.clone();
 
 
@@ -235,15 +234,26 @@ public class ContentPanelRendimentos extends JPanel {
 
 		}
 	};
-
-	private void updateTabela(String nome) {
+	@Override
+	public void updateTabela() throws SQLException {
 		ArrayList<Object> retorno = MainService.getTabela(nome);
 		tabela = (Object[][]) retorno.get(0);
 		anos = (ArrayList<Integer>) retorno.get(1);
+		if(comboBox!=null) {
+			comboBox.removeAllItems();
+			comboBox_1.removeAllItems();
+		}
+		
+		for(int ano : anos) {
+			comboBox.addItem(ano);
+			comboBox_1.addItem(ano);
+		}
+		
 	}
 
 	private void mudaAnos() {
 		anosPeriodo.clear();
+		if(comboBox.getSelectedItem() == null || comboBox_1.getSelectedItem() == null) return;
 		table_1.getColumnModel().getColumn(4).setHeaderValue("Total Anual [R$]");
 		table_1.getTableHeader().repaint();
 		for (int i = 0; i < anos.size(); i++) {
@@ -311,8 +321,8 @@ public class ContentPanelRendimentos extends JPanel {
 		return this.nome;
 	}
 	
-	public void attTabelas() {
-		updateTabela("Rendimentos");
+	public void attTabelas() throws SQLException {
+		updateTabela();
 		if(rdbtnAno.isSelected()) {
 			mudaAnos();
 		}

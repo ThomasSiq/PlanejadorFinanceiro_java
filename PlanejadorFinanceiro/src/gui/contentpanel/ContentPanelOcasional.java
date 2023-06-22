@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -35,7 +36,7 @@ import javax.swing.JTextPane;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.SystemColor;
 
-public class ContentPanelOcasional extends JPanel {
+public class ContentPanelOcasional extends ContentPanel {
 	private JPanel internPanel;
 	private JPanel panel;
 	
@@ -59,10 +60,10 @@ public class ContentPanelOcasional extends JPanel {
 	
 	private JTable table_1;
 	
-	private String nome = "Ocasional";
 	
 	
-	public ContentPanelOcasional(){
+	public ContentPanelOcasional() throws SQLException{
+		this.setName("Ocasional");
 		
 		table_1 = new JTable();
 		internPanel = new JPanel();
@@ -70,7 +71,7 @@ public class ContentPanelOcasional extends JPanel {
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 		
-		updateTabela(nome); //Pega dados das tabelas
+		updateTabela(); //Pega dados das tabelas
 		anosPeriodo = (ArrayList<Integer>) anos.clone();
 
 
@@ -247,16 +248,32 @@ public class ContentPanelOcasional extends JPanel {
 	};
 	private JTextPane textBalanco;
 
-	private void updateTabela(String nome) {
-		ArrayList<Object> retorno = MainService.getTabela(nome);
+	public void updateTabela() throws SQLException {
+		
+		ArrayList<Object> retorno = MainService.getTabela(this.getName());
 		tabela = (Object[][]) retorno.get(0);
 		anos = (ArrayList<Integer>) retorno.get(1);
+		if(comboBox!=null) {
+			comboBox.removeAllItems();
+			comboBox_1.removeAllItems();
+		}
+		
+		for(int ano : anos) {
+			comboBox.addItem(ano);
+			comboBox_1.addItem(ano);
+		}
 	}
 
 	private void mudaAnos() {
 		anosPeriodo.clear();
 		table_1.getColumnModel().getColumn(3).setHeaderValue("Total Anual [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+		if(comboBox.getSelectedItem()==null || comboBox_1.getSelectedItem()==null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
@@ -271,7 +288,7 @@ public class ContentPanelOcasional extends JPanel {
 				}
 			}
 		}
-		internPanel.removeAll();
+		
 		if(tabela.length != 0) {
 			DesenhaTabelasMenores.desenhaTabelasMenoresAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel, tablesList);
 		}
@@ -320,12 +337,8 @@ public class ContentPanelOcasional extends JPanel {
 
 	}
 	
-	public String getNome() {
-		return this.nome;
-	}
-	
-	public void attTabelas() {
-		updateTabela(nome);
+	public void attTabelas() throws SQLException {
+		updateTabela();
 		if(rdbtnAno.isSelected()) {
 			mudaAnos();
 		}
@@ -335,6 +348,7 @@ public class ContentPanelOcasional extends JPanel {
 	}
 	
 	private void calculaBalanco() {
+		if(comboBox.getSelectedItem()==null)return;
 		int anoMaior = (int)comboBox.getSelectedItem();
 		double soma = 0;
 		if((int)comboBox_1.getSelectedItem()>(int)comboBox.getSelectedItem()) {

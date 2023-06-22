@@ -152,7 +152,7 @@ public class DesenhaTabelasDinamicas {
 
 		table_1 = table_11;
 		valores = valoresTuplas(tabela);
-
+		if(valores.length==0) return;
 		valor = new Object[valores.length][valores[0].length];
 		for (int i = 0; i < valores.length; i++) {
 			System.arraycopy(valores[i], 0, valor[i], 0, valores[i].length);

@@ -11,9 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
-import gui.dialogWindows.AdicionarDialogMenor;
-import gui.dialogWindows.EditarDialogMenor;
-import gui.dialogWindows.ExcluirDialogMenor;
+import gui.dialogwindows.AdicionarDialogMenor;
+import gui.dialogwindows.EditarDialogMenor;
+import gui.dialogwindows.ExcluirDialogMenor;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.JSeparator;
 
 public class ButtonsPanelLongoPrazo extends JPanel {
 
@@ -21,12 +24,12 @@ public class ButtonsPanelLongoPrazo extends JPanel {
 	 * Create the panel.
 	 */
 	public ButtonsPanelLongoPrazo(ActionListener evento, final WindowListener att) {
-		
+		this.setName("LongoPrazo");
 		setBounds(10, 11, 277, 528);
 		
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
-		homeButton.setBounds(103, 11, 84, 23);
+		homeButton.setBounds(100, 11, 84, 23);
 		homeButton.addActionListener(evento);
 		setLayout(null);
 		add(homeButton);
@@ -65,14 +68,28 @@ public class ButtonsPanelLongoPrazo extends JPanel {
 		});
 		add(btnExcluirCategoria_1);
 		
-		JTextArea txtrFundoParaDespesas = new JTextArea();
-		txtrFundoParaDespesas.setBackground(SystemColor.control);
-		txtrFundoParaDespesas.setWrapStyleWord(true);
-		txtrFundoParaDespesas.setLineWrap(true);
-		txtrFundoParaDespesas.setFont(new Font("Monospaced", Font.PLAIN, 23));
-		txtrFundoParaDespesas.setText("Fundo para despesas ocasionais");
-		txtrFundoParaDespesas.setBounds(51, 63, 189, 118);
-		add(txtrFundoParaDespesas);
+		JLabel lblNewLabel = new JLabel("Fundo Para:");
+		lblNewLabel.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 18));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 78, 277, 30);
+		add(lblNewLabel);
+		
+		JLabel lblDespesasOcasionais = new JLabel("Investimentos de");
+		lblDespesasOcasionais.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDespesasOcasionais.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 27));
+		lblDespesasOcasionais.setBounds(0, 117, 277, 43);
+		add(lblDespesasOcasionais);
+		
+		JLabel lblOcasionais = new JLabel("Longo Prazo");
+		lblOcasionais.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOcasionais.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 34));
+		lblOcasionais.setBounds(0, 161, 277, 40);
+		add(lblOcasionais);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 45, 264, 7);
+		separator.setForeground(SystemColor.controlShadow);
+		add(separator);
 		
 	}
 }

@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -33,12 +34,12 @@ import javax.swing.table.TableColumnModel;
 import service.DesenhaTabelasMenores;
 import service.MainService;
 
-public class ContentPanelLongoPrazo extends JPanel {
+public class ContentPanelLongoPrazo extends ContentPanel {
 	private JPanel internPanel;
 	private JPanel panel;
 	
 	private ArrayList<Integer> anos;
-	private ArrayList<Integer> anosPeriodo;
+	private ArrayList<Integer> anosPeriodo = new ArrayList();
 	private ArrayList<Integer[]> mesesPeriodo = new ArrayList();
 	private ArrayList<JTable> tablesList = new ArrayList();
 	
@@ -59,16 +60,14 @@ public class ContentPanelLongoPrazo extends JPanel {
 	
 	private String nome = "LongoPrazo";
 	
-	public ContentPanelLongoPrazo() {
-		
+	public ContentPanelLongoPrazo() throws SQLException {
+		this.setName("LongoPrazo");
 		table_1 = new JTable();
 		internPanel = new JPanel();
 		panel = new JPanel();
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 		
-		updateTabela(nome); //Pega dados das tabelas
-		anosPeriodo = (ArrayList<Integer>) anos.clone();
 
 
 		internPanel.setBorder(null);
@@ -104,7 +103,7 @@ public class ContentPanelLongoPrazo extends JPanel {
 			}
 		});
 		
-		comboBox = new JComboBox(anos.toArray(new Integer[anos.size()]));
+		comboBox = new JComboBox();
 		comboBox.setBounds(318, 6, 100, 25);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -117,7 +116,7 @@ public class ContentPanelLongoPrazo extends JPanel {
 			}
 		});
 		
-		comboBox_1 = new JComboBox(anos.toArray(new Integer[anos.size()]));
+		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(430, 6, 100, 25);
 		comboBox_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -244,16 +243,38 @@ public class ContentPanelLongoPrazo extends JPanel {
 	};
 	private JTextPane textBalanco;
 
-	private void updateTabela(String nome) {
-		ArrayList<Object> retorno = MainService.getTabela(nome);
+	public void updateTabela() throws SQLException {
+		ArrayList<Object> retorno = MainService.getTabela(this.getName());
 		tabela = (Object[][]) retorno.get(0);
 		anos = (ArrayList<Integer>) retorno.get(1);
+		if(comboBox!=null) {
+			comboBox.removeAllItems();
+			comboBox_1.removeAllItems();
+		}
+		
+		for(int ano : anos) {
+			comboBox.addItem(ano);
+			comboBox_1.addItem(ano);
+		}
+		if (rdbtnAno==null || rdbtnAno.isSelected()) {
+			mudaAnos();
+		} else {
+			mudaMeses();
+		}
+		
+		anosPeriodo = (ArrayList<Integer>) anos.clone();
 	}
 
 	private void mudaAnos() {
 		anosPeriodo.clear();
 		table_1.getColumnModel().getColumn(3).setHeaderValue("Total Anual [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+		if (comboBox.getSelectedItem() == null || comboBox_1.getSelectedItem() == null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
@@ -268,7 +289,6 @@ public class ContentPanelLongoPrazo extends JPanel {
 				}
 			}
 		}
-		internPanel.removeAll();
 		if(tabela.length != 0) {
 			DesenhaTabelasMenores.desenhaTabelasMenoresAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel, tablesList);
 		}
@@ -282,9 +302,13 @@ public class ContentPanelLongoPrazo extends JPanel {
 		mesesPeriodo.clear();
 		table_1.getColumnModel().getColumn(3).setHeaderValue("Total Mensal [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+		if (comboBox.getSelectedItem() == null || comboBox_1.getSelectedItem() == null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
-			
-
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
 				if (anos.get(i) <= (int) (comboBox_1.getSelectedItem())) {
 					for(int j =12; j >0; j--) {
@@ -309,7 +333,6 @@ public class ContentPanelLongoPrazo extends JPanel {
 				}
 			}
 		}
-		internPanel.removeAll();
 		DesenhaTabelasMenores.desenhaTabelasMenoresMeses(valores, valor, mesesPeriodo, tabela, table_1, internPanel, tablesList);
 		internPanel.revalidate();
 		internPanel.repaint();
@@ -321,8 +344,8 @@ public class ContentPanelLongoPrazo extends JPanel {
 		return this.nome;
 	}
 	
-	public void attTabelas() {
-		updateTabela(nome);
+	public void attTabelas() throws SQLException {
+		updateTabela();
 		if(rdbtnAno.isSelected()) {
 			mudaAnos();
 		}

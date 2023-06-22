@@ -5,7 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 import javax.swing.BoxLayout;
@@ -24,6 +26,7 @@ import javax.swing.table.TableColumnModel;
 import service.DesenhaTabelasDinamicas;
 import service.DesenhaTabelasResumo;
 import service.MainService;
+import service.PegaTabelas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -38,7 +41,7 @@ import javax.swing.event.TableColumnModelEvent;
 import javax.swing.event.TableColumnModelListener;
 import javax.swing.border.BevelBorder;
 
-public class ContentPanelResumo extends JPanel {
+public class ContentPanelResumo extends ContentPanel {
 	private JPanel internPanel;
 	private JPanel panel;
 
@@ -60,19 +63,19 @@ public class ContentPanelResumo extends JPanel {
 
 	private JScrollPane scrollPaneEx;
 	private JScrollPane scrollPane_1;
+	private String tipo = "Ano";
 
 	private JTable table_1;
 
 	private ArrayList<String> nomes = new ArrayList();
-	private ArrayList<String> todosNomes = new ArrayList();
+	private final ArrayList<String> todosNomes = new ArrayList<String>(
+			Arrays.asList("Rendimentos", "Ocasional", "LongoPrazo", "Despesas", "Total Disponivel", "Resultado"));
 
-	public ContentPanelResumo() {
-		todosNomes.add("Rendimentos");
-		todosNomes.add("Ocasional");
-		todosNomes.add("LongoPrazo");
-		todosNomes.add("Despesas");
-		todosNomes.add("Total Disponivel");
-		todosNomes.add("Resultado");
+	private PegaTabelas tabelasDados;
+
+	public ContentPanelResumo(PegaTabelas tabelasDados) throws SQLException {
+		this.setName("Resumo");
+		this.tabelasDados = tabelasDados;
 
 		nomes.add("Rendimentos");
 		nomes.add("Despesas");
@@ -82,10 +85,12 @@ public class ContentPanelResumo extends JPanel {
 		scrollPane_1 = new JScrollPane();
 		scrollPaneEx = new JScrollPane(internPanel);
 
-		updateTabelaBd();
-		updateTabela(); // Pega dados das tabelas
-		anosPeriodo = (ArrayList<Integer>) anos.clone();
+		// updateTabelaBd();
+		tabelaBd = tabelasDados.getTabelaBd();
+		anos = tabelasDados.getAnos();
+		 // Pega dados das tabelas
 
+		anosPeriodo = (ArrayList<Integer>) anos.clone();
 		internPanel.setBorder(null);
 		internPanel.setLayout(new BoxLayout(internPanel, BoxLayout.Y_AXIS));
 		internPanel.setBounds(0, 0, 30, 30);
@@ -193,7 +198,7 @@ public class ContentPanelResumo extends JPanel {
 				table_1.setBounds(component.getX(), component.getY() + 50, component.getWidth() - 15, 50);
 			}
 		});
-
+		updateTabela();
 		mudaAnos();
 	}
 
@@ -238,90 +243,6 @@ public class ContentPanelResumo extends JPanel {
 		}
 	};
 
-	private void updateTabelaBd() {
-		tabelaBd.clear();
-		int maior = 0;
-		for (int i = 0; i < 4; i++) {
-			ArrayList<Object> retorno = MainService.getTabela(todosNomes.get(i));
-			tabelaBd.add((Object[][]) retorno.get(0));
-			achaAno((ArrayList<Integer>) retorno.get(1));
-			
-			for (int j = 0; j < tabelaBd.get(i).length; j++) {
-				tabelaBd.get(i)[j][6] = (int) tabelaBd.get(i)[j][3] * (double) tabelaBd.get(i)[j][6];
-			}
-			if(tabelaBd.get(i).length>maior) {
-				maior = tabelaBd.get(i).length;
-			}
-		}
-		Object[][] total = new Object[anos.size()][9];
-		Object[][] resultado = new Object[anos.size()][9];
-
-		for (int i = 0; i < anos.size(); i++) {
-			total[i][6] = 0.0;
-			total[i][7] = 0.0;
-			total[i][8] = 0.0;
-			resultado[i][6] = 0.0;
-			resultado[i][7] = 0.0;
-			resultado[i][8] = 0.0;
-			total[i][1] = anos.get(i);
-			resultado[i][1] = anos.get(i);
-		}
-		System.out.println(">>>>>"+maior);
-
-		for (int k = 0; k < anos.size(); k++) {
-			for (int i = 0; i < maior; i++) {
-
-				for (int j = 6; j < 9; j++) {
-					
-
-						System.out.println(anos.get(k));
-						System.out.println(j);
-
-					
-					if (tabelaBd.get(0).length > i && anos.get(k) == (int) tabelaBd.get(0)[i][1]) {
-	
-						total[k][j] = (double) total[k][j] + (double) tabelaBd.get(0)[i][j];
-
-					}
-
-					if (tabelaBd.get(1).length > i && anos.get(k) == (int) tabelaBd.get(1)[i][1]) {
-
-						total[k][j] = (double) total[k][j] - (double) tabelaBd.get(1)[i][j];
-
-					}
-					if (tabelaBd.get(2).length > i && anos.get(k) == (int) tabelaBd.get(2)[i][1]) {
-
-						total[k][j] = (double) total[k][j] - (double) tabelaBd.get(2)[i][j];
-					}
-					if (tabelaBd.get(3).length > i && anos.get(k) == (int) tabelaBd.get(3)[i][1]) {
-						if(anos.get(k) == 2023) {
-							System.out.println(resultado[k][j]);
-
-						}
-						resultado[k][j] = (double) resultado[k][j] - (double) tabelaBd.get(3)[i][j];
-					}
-
-				}
-			}
-			
-			System.out.println(">>>>"+resultado[k][7]);
-			resultado[k][6] = (double) resultado[k][6] + (double)total[k][6];
-			resultado[k][7] = (double) resultado[k][7] + (double)total[k][7];
-			resultado[k][8] = (double) resultado[k][8] + (double)total[k][8];
-			if(anos.get(k) == 2023) {
-				System.out.println(">>>>"+total[k][7]);
-				System.out.println(">>>>"+resultado[k][7]);
-				System.out.println(">>>>"+anos.get(k));
-				System.out.println(">>>>"+k);
-
-			}
-		}
-
-		tabelaBd.add(total);
-		tabelaBd.add(resultado);
-
-	}
-
 	private void achaAno(ArrayList<Integer> retorno) {
 		for (int ano : retorno) {
 			boolean igual = false;
@@ -338,20 +259,38 @@ public class ContentPanelResumo extends JPanel {
 		Collections.sort(anos, Collections.reverseOrder());
 	}
 
-	private void updateTabela() {
-		tabela.clear();
-		for (String nome : nomes) {
-			System.out.println(nome);
-			System.out.println(todosNomes);
-			tabela.add(tabelaBd.get(todosNomes.indexOf(nome)));
+	public void updateTabela() {
+		tabela = tabelasDados.updateTabela(nomes);
+		anos = tabelasDados.getAnos();
+		if (comboBox != null) {
+			comboBox.removeAllItems();
+			comboBox_1.removeAllItems();
+		}
+
+		for (int ano : anos) {
+			comboBox.addItem(ano);
+			comboBox_1.addItem(ano);
+		}
+		if (rdbtnAno==null || rdbtnAno.isSelected()) {
+			mudaAnos();
+		} else {
+			mudaMeses();
 		}
 
 	}
 
 	private void mudaAnos() {
+
 		anosPeriodo.clear();
 		table_1.getColumnModel().getColumn(3).setHeaderValue("Total Anual [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+
+		if (comboBox.getSelectedItem() == null || comboBox_1.getSelectedItem() == null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
@@ -368,8 +307,8 @@ public class ContentPanelResumo extends JPanel {
 		}
 		internPanel.removeAll();
 		if (tabela.size() > 0) {
-			DesenhaTabelasResumo.desenhaTabelasAnos(valores, valor, anosPeriodo, tabela, table_1, internPanel,
-					tablesList, nomes);
+			DesenhaTabelasResumo.desenhaTabelasResumo(anosPeriodo, mesesPeriodo, table_1, internPanel, tablesList,
+					nomes, tabelasDados, "Ano");
 		}
 		internPanel.revalidate();
 		internPanel.repaint();
@@ -377,9 +316,16 @@ public class ContentPanelResumo extends JPanel {
 	}
 
 	private void mudaMeses() {
+
 		mesesPeriodo.clear();
 		table_1.getColumnModel().getColumn(3).setHeaderValue("Total Mensal [R$]");
 		table_1.getTableHeader().repaint();
+		internPanel.removeAll();
+		if (comboBox.getSelectedItem() == null || comboBox_1.getSelectedItem() == null) {
+			internPanel.revalidate();
+			internPanel.repaint();
+			return;
+		}
 		for (int i = 0; i < anos.size(); i++) {
 
 			if (anos.get(i) >= (int) (comboBox.getSelectedItem())) {
@@ -406,16 +352,15 @@ public class ContentPanelResumo extends JPanel {
 				}
 			}
 		}
-		internPanel.removeAll();
-		DesenhaTabelasResumo.desenhaTabelasMeses(valores, valor, mesesPeriodo, tabela, table_1, internPanel, tablesList,
-				nomes);
+		DesenhaTabelasResumo.desenhaTabelasResumo(anosPeriodo, mesesPeriodo, table_1, internPanel, tablesList, nomes,
+				tabelasDados, "mes");
 		internPanel.revalidate();
 		internPanel.repaint();
 
 	}
 
-	public void attTabelas() {
-		updateTabelaBd();
+	public void attTabelas() throws SQLException {
+		tabelasDados.updateTabelaBd();
 		updateTabela();
 
 		if (rdbtnAno.isSelected()) {
@@ -437,4 +382,5 @@ public class ContentPanelResumo extends JPanel {
 			mudaMeses();
 		}
 	}
+
 }

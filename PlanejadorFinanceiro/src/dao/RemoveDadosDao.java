@@ -6,14 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class RemoveDadosDao {
-	public static void removeCategoria(String tabela, String categoria) {
+	public static void removeCategoria(String tabela, String categoria, String user) throws SQLException {
 		Statement st = null;
 		try {
 			try {
 				Connection conn = BancoDados.conectar();
-				System.out.println("Conexão estabelecida.");
 
-				String statement = "delete from categoria" + tabela + " where categoria = \"" + categoria+"\"";
+				String statement = "delete from categoria" + tabela + " where categoria = \"" + categoria+"\" and user = \""+user+"\"";
 				System.out.println(statement);
 				
 				st = conn.createStatement();
@@ -23,22 +22,19 @@ public class RemoveDadosDao {
 
 				BancoDados.finalizarStatement(st);
 				BancoDados.desconectar();
-				System.out.println("Conexão finalizada??.");
 			}
-		} catch (SQLException | IOException e) {
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}
 	
-	public static void removeTupla(String tabela, String codigo) {
+	public static void removeTupla(String tabela, String codigo, String user) throws SQLException {
 		Statement st = null;
 		try {
 			try {
 				Connection conn = BancoDados.conectar();
-				System.out.println("Conexão estabelecida.");
 
-				String statement = "delete from " + tabela + " where codigo = \"" + codigo+"\"";
-				System.out.println(statement);
+				String statement = "delete from " + tabela + " where codigo = \"" + codigo+"\" and user = \""+user+"\"";
 				
 				st = conn.createStatement();
 				st.executeUpdate(statement);
@@ -48,7 +44,7 @@ public class RemoveDadosDao {
 				BancoDados.finalizarStatement(st);
 				BancoDados.desconectar();
 			}
-		} catch (SQLException | IOException e) {
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
 	}

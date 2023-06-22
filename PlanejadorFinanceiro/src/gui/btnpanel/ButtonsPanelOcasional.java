@@ -12,15 +12,16 @@ import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import gui.dialogWindows.AdicionarDialog;
-import gui.dialogWindows.AdicionarDialogMenor;
-import gui.dialogWindows.EditarDialog;
-import gui.dialogWindows.EditarDialogMenor;
-import gui.dialogWindows.ExcluirDialog;
-import gui.dialogWindows.ExcluirDialogMenor;
+import gui.dialogwindows.AdicionarDialog;
+import gui.dialogwindows.AdicionarDialogMenor;
+import gui.dialogwindows.EditarDialog;
+import gui.dialogwindows.EditarDialogMenor;
+import gui.dialogwindows.ExcluirDialog;
+import gui.dialogwindows.ExcluirDialogMenor;
 
 import javax.swing.JTextArea;
 import java.awt.SystemColor;
+import javax.swing.JSeparator;
 
 public class ButtonsPanelOcasional extends JPanel {
 
@@ -28,12 +29,12 @@ public class ButtonsPanelOcasional extends JPanel {
 	 * Create the panel.
 	 */
 	public ButtonsPanelOcasional(ActionListener evento, final WindowListener att) {
-		
+		this.setName("Ocasional");
 		setBounds(10, 11, 277, 528);
 		
 		JButton homeButton = new JButton("Home");
 		homeButton.setName("Home");
-		homeButton.setBounds(103, 11, 84, 23);
+		homeButton.setBounds(100, 11, 84, 23);
 		homeButton.addActionListener(evento);
 		setLayout(null);
 		add(homeButton);
@@ -72,14 +73,28 @@ public class ButtonsPanelOcasional extends JPanel {
 		});
 		add(btnExcluirCategoria_1);
 		
-		JTextArea txtrFundoParaDespesas = new JTextArea();
-		txtrFundoParaDespesas.setBackground(SystemColor.control);
-		txtrFundoParaDespesas.setWrapStyleWord(true);
-		txtrFundoParaDespesas.setLineWrap(true);
-		txtrFundoParaDespesas.setFont(new Font("Monospaced", Font.PLAIN, 23));
-		txtrFundoParaDespesas.setText("Fundo para despesas ocasionais");
-		txtrFundoParaDespesas.setBounds(51, 63, 189, 118);
-		add(txtrFundoParaDespesas);
+		JLabel lblNewLabel = new JLabel("Fundo Para:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 18));
+		lblNewLabel.setBounds(0, 82, 277, 30);
+		add(lblNewLabel);
+		
+		JLabel lblDespesasOcasionais = new JLabel("Despesas");
+		lblDespesasOcasionais.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDespesasOcasionais.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 34));
+		lblDespesasOcasionais.setBounds(0, 121, 277, 43);
+		add(lblDespesasOcasionais);
+		
+		JLabel lblOcasionais = new JLabel("Ocasionais");
+		lblOcasionais.setHorizontalAlignment(SwingConstants.CENTER);
+		lblOcasionais.setFont(new Font("UD Digi Kyokasho NK-B", Font.BOLD, 34));
+		lblOcasionais.setBounds(0, 165, 277, 40);
+		add(lblOcasionais);
+		
+		JSeparator separator = new JSeparator();
+		separator.setBounds(10, 45, 264, 7);
+		separator.setForeground(SystemColor.controlShadow);
+		add(separator);
 		
 	}
 }
